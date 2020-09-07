@@ -1,0 +1,19 @@
+{
+    "name": "socialiteproviders/larder",
+    "description": "Larder OAuth2 Provider for Laravel Socialite",
+    "license": "MIT",
+    "authors": [{
+        "name": "Lehman Black",
+        "email": "WileESpaghetti@users.noreply.github.com"
+    }],
+    "require": {
+        "php": ">=5.5.9",
+        "ext-json": "*",
+        "socialiteproviders/manager": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SocialiteProviders\\Larder\\": ""
+        }
+    }
+}
