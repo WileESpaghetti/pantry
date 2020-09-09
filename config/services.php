@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'larder' => [
+        'client_id' => getenv('LARDER_CLIENT_ID'),
+        'client_secret' => getenv('LARDER_CLIENT_SECRET'),
+        'redirect' => getenv('APP_URL') . '/login/larder/callback'
+    ]
 ];

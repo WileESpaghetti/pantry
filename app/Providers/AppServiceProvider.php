@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use SocialiteProviders\Larder\Provider as LarderProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +24,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+//        $this->bootLarderSocialite();
     }
+
+//    private function bootLarderSocialite()
+//    {
+//        $socialite = $this->app->make('Laravel\Socialite\Contracts\Factory');
+//        $socialite->extend(
+//            'larder',
+//            function ($app) use ($socialite) {
+//                $config = $app['config']['services.larder'];
+//                return $socialite->buildProvider(LarderProvider::class, $config);
+//            }
+//        );
+//    }
 }

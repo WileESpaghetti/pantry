@@ -20,3 +20,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('login/larder', 'Auth\LarderAuthController@redirectToProvider')->name('login/larder');
+Route::get('login/larder/callback', 'Auth\LarderAuthController@handleProviderCallback');
