@@ -55,7 +55,7 @@ class Provider extends AbstractProvider
         return (new User())->setRaw($user)->map([
             'id'       => $user['id'],
             'nickname' => $user['username'],
-            'name'     => "{$user['first_name']} {$user['last_name']}",
+            'name'     => trim(implode(' ', [$user['first_name'], $user['last_name']])),
             'avatar'   => $user['avatar'],
             'email' => "{$user['username']}@example.com"
         ]);
