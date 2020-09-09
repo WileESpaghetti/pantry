@@ -15,7 +15,7 @@ class Provider extends AbstractProvider
     /**
      * {@inheritdoc}
      */
-    protected $scopes = ['read+write'];
+    protected $scopes = ['read write'];
 
     /**
      * {@inheritdoc}
