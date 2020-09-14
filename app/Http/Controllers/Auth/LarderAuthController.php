@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Providers\RouteServiceProvider;
+use App\SocialIdentity;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +13,13 @@ use Laravel\Socialite\Facades\Socialite;
 
 class LarderAuthController extends Controller
 {
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = RouteServiceProvider::HOME;
+
     public function redirectToProvider() {
         return Socialite::with('larder')->redirect();
     }
@@ -18,19 +27,30 @@ class LarderAuthController extends Controller
     public function handleProviderCallback() {
         $user = Socialite::with('larder')->stateless()->user();
 
-        $users = User::where(['email' => $user->getEmail()])->first();
-        if ($users) {
-            Auth::login($users);
-            return redirect('/home');
+        $authUser = $this->findOrCreateUser($user, 'larder');
+        Auth::login($authUser);
+        return redirect($this->redirectTo);
+    }
+
+    public function findOrCreateUser($providerUser, $provider) {
+        $account = SocialIdentity::whereProviderName($provider)
+            ->whereProviderId($providerUser->getId())
+            ->first();
+
+        if ($account) {
+            return $account->user;
         } else {
             $user = User::create([
-                'name' => $user->getName(),
-                'email' => $user->getEmail(),
-                'image' => $user->getAvatar(),
-                'provider_id' => $user->getId(),
-                'provider' => 'larder',
+                'email' => $providerUser->getEmail(),
+                'name'  => $providerUser->getName(),
             ]);
-            return redirect()->route('home');
+
+            $user->identities()->create([
+                'provider_id'   => $providerUser->getId(),
+                'provider_name' => $provider,
+            ]);
+
+            return $user;
         }
     }
 }

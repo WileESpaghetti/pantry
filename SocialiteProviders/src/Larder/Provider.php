@@ -57,7 +57,7 @@ class Provider extends AbstractProvider
             'nickname' => $user['username'],
             'name'     => trim(implode(' ', [$user['first_name'], $user['last_name']])),
             'avatar'   => $user['avatar'],
-            'email' => "{$user['username']}@example.com"
+//            'email' => "{$user['username']}@example.com"
         ]);
     }
 
