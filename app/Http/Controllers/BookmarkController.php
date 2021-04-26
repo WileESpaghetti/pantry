@@ -32,7 +32,7 @@ class BookmarkController extends Controller
         if ($request->hasFile($fieldName)) {
             if ($request->file($fieldName)->isValid()) {
                 $bookmarksFile = $request->file($fieldName);
-                $fileName = $bookmarksFile->hashName(); // TODO use tempnam()
+                $fileName = $bookmarksFile->hashName();
                 $f = $bookmarksFile->storeAs('/public', $fileName);
 
                 ProcessBookmarks::dispatch($f, $user);

@@ -5,6 +5,13 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
 
+            @foreach ($notifications as $notification)
+                <div class="alert alert-info text-info">
+                    <h4 class="alert-heading">{{ __($notification->type)}}</h4>
+                    <p><strong>{{$notification->data['count']}}</strong> {{ __('bookmarks imported')  }}</p>
+                </div>
+            @endforeach
+
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 

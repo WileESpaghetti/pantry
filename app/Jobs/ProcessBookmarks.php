@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Bookmark;
+use App\Notifications\BookmarksImported;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -66,5 +67,8 @@ class ProcessBookmarks implements ShouldQueue
         }, $bookmarks);
 
         Bookmark::upsert($bookmarks, ['uri', 'user_id'], ['title', 'note', 'pub']);
+
+        $importedCount = count($bookmarks); // FIXME this is how many bookmarks are in the file, but needs to be updated/new/error/duplicated counts
+        $this->user->notify(new BookmarksImported($importedCount));
     }
 }
