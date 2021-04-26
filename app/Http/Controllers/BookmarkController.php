@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessBookmarks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookmarkController extends Controller
 {
@@ -24,12 +26,17 @@ class BookmarkController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+
         $fieldName = 'bookmark';
         if ($request->hasFile($fieldName)) {
             if ($request->file($fieldName)->isValid()) {
                 $bookmarksFile = $request->file($fieldName);
                 $fileName = $bookmarksFile->hashName(); // TODO use tempnam()
-                $bookmarksFile->storeAs('/public', $fileName);
+                $f = $bookmarksFile->storeAs('/public', $fileName);
+
+                ProcessBookmarks::dispatch($f, $user);
+
 
                 return redirect()->back()->with('success', __('Import has started. Please allow some time for it to finish.'));
             } else {
