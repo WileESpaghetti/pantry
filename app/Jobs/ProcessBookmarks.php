@@ -59,7 +59,7 @@ class ProcessBookmarks implements ShouldQueue
             $bookmarkData['user_id'] = $this->user->id;
 
             // Convert from Unix timestamp in microseconds
-            $bookmarkData['created_at'] = Carbon::createFromTimestamp(trim($bookmarkData['time']/* / 1000*/ )); // FIXME Google Bookmarks is in microseconds and others might be different
+            $bookmarkData['created_at'] = Carbon::createFromTimestamp($bookmarkData['time']);
             unset($bookmarkData['time']);
 
             return $bookmarkData;
