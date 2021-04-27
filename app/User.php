@@ -40,4 +40,12 @@ class User extends Authenticatable
     public function identities() {
         return $this->hasMany('App\SocialIdentity');
     }
+
+    /**
+     * Get the bookmarks for the user.
+     */
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }
