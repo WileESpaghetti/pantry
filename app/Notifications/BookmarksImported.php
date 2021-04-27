@@ -10,16 +10,18 @@ class BookmarksImported extends Notification
 {
     use Queueable;
 
-    private $importCount;
+    private $counts;
+    private $warnings;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($importCount)
+    public function __construct($counts, $warnings)
     {
-        $this->importCount = $importCount;
+        $this->counts = $counts;
+        $this->warnings = $warnings;
     }
 
     /**
@@ -56,7 +58,9 @@ class BookmarksImported extends Notification
     public function toArray($notifiable)
     {
         return [
-            'count' => $this->importCount,
+            'counts' => $this->counts,
+            'warnings' => json_encode($this->warnings),
+            'warning_count' => count($this->warnings),
         ];
     }
 }
