@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bookmark;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,8 +29,10 @@ class HomeController extends Controller
         $notifications = $user->unreadNotifications;
 //        $notifications = $user->notifications;
 
+        $bookmarks = Bookmark::paginate(100);
+
         $notifications->markAsRead();
 
-        return view('home', ['notifications' => $notifications]);
+        return view('home', ['notifications' => $notifications, 'bookmarks' => $bookmarks]);
     }
 }

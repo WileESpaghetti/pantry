@@ -28,6 +28,8 @@
 
             @include('dashboard.file-upload')
 
+            @include('dashboard.bookmarks')
+
         </div>
     </div>
 </div>

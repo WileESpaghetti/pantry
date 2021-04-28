@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use SocialiteProviders\Larder\Provider as LarderProvider;
 
@@ -25,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 //        $this->bootLarderSocialite();
+        Paginator::useBootstrap();
     }
 
 //    private function bootLarderSocialite()
