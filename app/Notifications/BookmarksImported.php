@@ -60,7 +60,6 @@ class BookmarksImported extends Notification
         return [
             'counts' => $this->counts,
             'warnings' => json_encode($this->warnings),
-            'warning_count' => count($this->warnings),
         ];
     }
 }
