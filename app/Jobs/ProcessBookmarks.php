@@ -87,22 +87,19 @@ class ProcessBookmarks implements ShouldQueue
          */
         $html = Storage::get($this->fileName);
         $bookmarks = $bookmarkParser->parseString($html);
-        $seenUriIndexes = [];
-        $warnings = [];
 
-        $i = 0; // FIXME ghetto loop inside of map, what I really want is probably a loop
-        $bookmarks = array_map(function($bookmarkData) use (&$seenUriIndexes, $bookmarks, &$warnings, &$i) {
+        $warnings = [];
+        $seenUriIndexes = [];
+        foreach($bookmarks as $i => $bookmarkData) {
             $uri = $bookmarkData['uri'];
+
+            // remove attributes that we do not track
+            unset($bookmarkData['icon']);
+            unset($bookmarkData['tags']);
+
             if (isset($seenUriIndexes[$uri])) {
                 $firstIndex = $seenUriIndexes[$uri];
                 $firstBookmark = $bookmarks[$firstIndex];
-                // normalize tags for comparison. this is still needed because we do not change the original bookmark data. I want to remove this part because we don't save imported tags
-                if (is_array($firstBookmark['tags'])) {
-                    $firstBookmark['tags'] = implode(', ', $firstBookmark['tags']);
-                }
-                if (is_array($bookmarkData['tags'])) {
-                    $bookmarkData['tags'] = implode(', ', $bookmarkData['tags']);
-                }
 
                 $diff = array_diff($firstBookmark, $bookmarkData);
                 $json = json_encode($diff);
@@ -114,29 +111,25 @@ class ProcessBookmarks implements ShouldQueue
                  * multiple jobs.
                  */
                 $warnings[] = sprintf(__("skipping duplicate bookmark: %s\n\t%s"), $uri, $json);
-                // TODO break loop
-            } else {
-                $seenUriIndexes[$uri] = $i;
+                // TODO if we want to ignore the duplicates entirely the we can either unset or create a new array and then continue;
             }
 
-            // remove attributes that we do not track
-            unset($bookmarkData['icon']);
-            unset($bookmarkData['tags']);
+            $seenUriIndexes[$uri] = $i;
 
             $bookmarkData['user_id'] = $this->user->id;
 
             $bookmarkData['created_at'] = Carbon::createFromTimestamp($bookmarkData['time']);
             unset($bookmarkData['time']);
 
-            $i++;
-            return $bookmarkData;
-        } , $bookmarks);
+            $bookmarks[$i] = $bookmarkData;
+        }
 
         $affectedRows = Bookmark::upsert($bookmarks, ['uri', 'user_id'], ['title', 'note', 'pub']); // FIXME not sure if we want to overwrite data for already existing bookmarks. If we do not update data, would `insertOrIgnore()` be more efficient
 
         $counts = $this->calcInsertsAndUpdates(count($bookmarks), $affectedRows, count($warnings));
         $warnings = array_splice($warnings, 0, 5);// FIXME truncating warnings due to test file generating more warning data than column length allows
 
+        // TODO https://laravel.com/docs/8.x/queues#job-events
         $this->user->notify(new BookmarksImported($counts, $warnings));
     }
 }
