@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTagsTable extends Migration
+class CreateFoldersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,17 @@ class CreateTagsTable extends Migration
     public function up()
     {
         // FIXME need a tag->bookmark pivot table
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('bookmark_id')->constrained();
             $table->string('name');
+            $table->string('color');
+//            $table->string('icon');
+//            $table->foreignId('parent_id')->constrained();
+            $table->unsignedInteger('links')->default(0);
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
 
-            $table->unique(['bookmark_id', 'name']);
+            $table->unique(['user_id', 'name']);
         });
     }
 
@@ -32,6 +35,6 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('folders');
     }
 }

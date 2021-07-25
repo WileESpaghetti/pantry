@@ -131,5 +131,7 @@ class ProcessBookmarks implements ShouldQueue
 
         // TODO https://laravel.com/docs/8.x/queues#job-events
         $this->user->notify(new BookmarksImported($counts, $warnings));
+
+        // TODO remove import file
     }
 }
