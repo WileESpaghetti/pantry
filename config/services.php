@@ -33,6 +33,7 @@ return [
     'larder' => [
         'client_id' => getenv('LARDER_CLIENT_ID'),
         'client_secret' => getenv('LARDER_CLIENT_SECRET'),
-        'redirect' => getenv('APP_URL') . '/login/larder/callback'
+        'redirect' => getenv('APP_URL') . '/login/larder/callback',
+        'token' => env('LARDER_PERSONAL_TOKEN'),
     ]
 ];

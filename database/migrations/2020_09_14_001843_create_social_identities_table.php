@@ -18,6 +18,8 @@ class CreateSocialIdentitiesTable extends Migration
             $table->bigInteger('user_id');
             $table->string('provider_name')->nullable();
             $table->string('provider_id')->unique()->nullable();
+            $table->string('access_token')->nullable();
+            $table->string('refresh_token')->nullable();
             $table->timestamps();
         });
 
