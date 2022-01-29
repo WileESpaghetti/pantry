@@ -1,0 +1,25 @@
+{
+    "name": "wileespaghetti/laravel-larder",
+    "description": "Larder support for Laravel",
+    "type": "package",
+    "authors": [
+        {
+            "name": "Lehman Black",
+            "email": "WileESpaghetti@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Larder\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Larder\\Providers\\LarderServiceProvider"
+            ]
+        }
+    }
+}
