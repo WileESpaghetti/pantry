@@ -18,6 +18,7 @@ return [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+        'scheme' => 'https',
     ],
 
     'postmark' => [
@@ -35,5 +36,6 @@ return [
         'client_secret' => getenv('LARDER_CLIENT_SECRET'),
         'redirect' => getenv('APP_URL') . '/login/larder/callback',
         'token' => env('LARDER_PERSONAL_TOKEN'),
+        'url' => env('LARDER_URL'),
     ]
 ];
