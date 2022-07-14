@@ -19,8 +19,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/user/settings', [App\Http\Controllers\UserSettingController::class, 'index'])->name('user-settings');
+Route::get('/help', [App\Http\Controllers\HelpController::class, 'index'])->name('help');
+Route::get('/feedback', [App\Http\Controllers\HelpController::class, 'feedback'])->name('feedback');
 
-Route::get('folders', 'FolderController@index');
-Route::get('bookmarks', 'BookmarkController@index');
-Route::post('bookmarks/import', 'BookmarkController@store');
+Route::resource('folders', App\Http\Controllers\FolderController::class);
+//Route::get('tags', 'TagController@index');
+//Route::get('tags/create', 'TagController@create');
+//Route::get('bookmarks', 'BookmarkController@index');
+//Route::get('larder/import', 'LarderController@store');
+//Route::get('larder/tags/import', 'LarderController@storeTags');
+//Route::get('larder/bookmarks/import', 'LarderController@storeBookmarks');
