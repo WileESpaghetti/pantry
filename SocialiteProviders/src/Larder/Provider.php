@@ -5,6 +5,8 @@ namespace SocialiteProviders\Larder;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
 
+// FIXME move some of this logic to the LarderService
+// FIXME use config values for some of the URLs
 class Provider extends AbstractProvider
 {
     /**
