@@ -5,6 +5,17 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
 
+            @if ($errors->any())
+                <!-- TODO move this to its own template -->
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @foreach ($notifications as $notification)
                 <div class="alert alert-info text-info">
                     <h4 class="alert-heading">{{ __($notification->type)}}</h4>
@@ -20,11 +31,17 @@
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
                 <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
 
                     {{ __('You are logged in!') }}
-
                 </div>
             </div>
+
+            @include('dashboard.larder')
 
             @include('dashboard.file-upload')
 
