@@ -11,6 +11,10 @@ use Laravel\Socialite\Facades\Socialite;
 use function redirect;
 
 
+/**
+ * TODO
+ * handle 401 error
+ */
 class LarderAuthController extends Controller
 {
     private static string $provider = 'larder';
@@ -61,8 +65,8 @@ class LarderAuthController extends Controller
             $user->identities()->create([
                 'provider_id'   => $providerUser->getId(),
                 'provider_name' => $provider,
-                'refresh_token' => $user->accessTokenResponseBody['refresh_token'],
-                'access_token' => $user->accessTokenResponseBody['access_token'],
+                'refresh_token' => $providerUser->accessTokenResponseBody['refresh_token'],
+                'access_token' => $providerUser->accessTokenResponseBody['access_token'],
             ]);
 
             return $user;
