@@ -14,6 +14,8 @@ class LarderServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(EventServiceProvider::class);
+
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'larder');
     }
 
     /**
@@ -25,6 +27,19 @@ class LarderServiceProvider extends ServiceProvider
     {
         //
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-//        dd('imloaded');
+
+        $this->publishConfig();
+
+    }
+
+    /**
+     * @return void
+     */
+    private function publishConfig() {
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../config/config.php' => config_path('larder.php'),
+            ], 'config');
+        }
     }
 }

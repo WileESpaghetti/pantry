@@ -2,11 +2,17 @@
 
 namespace Larder\Services;
 
+use App\Folder;
+use App\SocialFolder;
 use Illuminate\Support\Facades\Http;
 use JetBrains\PhpStorm\ArrayShape;
+use Larder\Resources\LarderBookmarkResource;
 use Larder\Resources\LarderFolderResource;
 use Larder\Resources\LarderTagResource;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Client\Factory as HttpFactory;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 /**
  * FIXME
@@ -14,7 +20,15 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class LarderService
 {
-    private string $baseUrl = 'https://larder.io/api/1/@me';
+    private HttpFactory $httpFactory;
+
+    private ConfigRepository $config;
+
+    public string $baseUrl;
+
+    const DEFAULT_LIMIT = 20; // TODO move to config value
+
+    private string $token; // Token Based authentication
 
     const DEFAULT_LIMIT = 20;
 
@@ -188,5 +202,4 @@ class LarderService
             ],
         ];
     }
-
 }
