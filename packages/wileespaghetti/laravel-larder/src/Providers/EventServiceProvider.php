@@ -32,5 +32,10 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
+
+        // FIXME have this be a toggleable user/app setting
+        Folder::observe(FolderObserver::class);
+//        Tag::observe(TagObserver::class);
+//        Bookmark::observe(BookmarkObserver::class);
     }
 }
