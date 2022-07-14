@@ -134,7 +134,7 @@ class LarderService
         }
 
         // get info for next page
-        if ($foldersJson['next']) {
+        if (!empty($foldersJson['next'])) {
             parse_str(parse_url($foldersJson['next'])['query'], $q);
             $limit = $q['limit'];
             $offset = $q['offset'];
