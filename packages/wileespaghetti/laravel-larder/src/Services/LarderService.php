@@ -30,9 +30,17 @@ class LarderService
 
     private string $token; // Token Based authentication
 
-    const DEFAULT_LIMIT = 20;
+    private string $access_token; // OAuth based authentication
 
-    private string $token;
+    private string $refresh_token;
+
+    public function __construct(ConfigRepository $configRepository, HttpFactory $httpFactory)
+    {
+        $this->config = $configRepository;
+        $this->httpFactory = $httpFactory;
+
+        $this->baseUrl = $this->config->get('larder.url', '');
+    }
 
     public function getDefaultLimit(): int
     {
