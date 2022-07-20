@@ -20,7 +20,6 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
         "nabcellent/laraconfig": "^1.3",
-        "shaarli/netscape-bookmark-parser": "^3.2",
         "socialiteproviders/manager": "^4.0.1",
         "wileespaghetti/html-bookmarks": "*",
         "wileespaghetti/laravel-larder": "*"

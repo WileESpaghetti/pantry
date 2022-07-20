@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a3e98166f2ca2c227c3e12e612169634",
+    "content-hash": "75ec3ec5e244c02833b93ed6e292b12a",
     "packages": [
         {
             "name": "brick/math",
@@ -5942,7 +5942,10 @@
             "dist": {
                 "type": "path",
                 "url": "packages/wileespaghetti/html-bookmarks",
-                "reference": "42f2b6502103b327fe7a7c6d0132b4ac72c411ed"
+                "reference": "1ca9c7554366954afc80e1af64b746109b035838"
+            },
+            "require": {
+                "shaarli/netscape-bookmark-parser": "^3.2"
             },
             "type": "package",
             "extra": {

@@ -1,0 +1,33 @@
+{
+    "name": "wileespaghetti/html-bookmarks",
+    "description": "HTML bookmark file support for Laravel",
+    "type": "package",
+    "authors": [
+        {
+            "name": "Lehman Black",
+            "email": "WileESpaghetti@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "shaarli/netscape-bookmark-parser": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "HtmlBookmarks\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "HtmlBookmarks\\Providers\\HtmlBookmarksServiceProvider"
+            ]
+        }
+    }
+}
