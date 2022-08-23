@@ -1,0 +1,29 @@
+{
+    "name": "wileespaghetti/pantry-data",
+    "description": "Core Data for pantry",
+    "type": "package",
+    "authors": [
+        {
+            "name": "Lehman Black",
+            "email": "WileESpaghetti@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Pantry\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+            ]
+        }
+    }
+}

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App;
+namespace Pantry;
 
-use App\Traits\HasUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Pantry\Traits\HasUser;
 
 class Folder extends Model
 {

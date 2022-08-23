@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Traits;
+namespace Pantry\Traits;
 
-use App\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Pantry\User;
 
 trait HasUser {
     /**

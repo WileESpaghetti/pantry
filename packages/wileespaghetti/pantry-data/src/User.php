@@ -1,14 +1,16 @@
 <?php
 
-namespace App;
+namespace Pantry;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Bookmark;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Nabcellent\Laraconfig\HasConfig;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasFactory, Notifiable, HasConfig;
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password'
+        'name', 'email'
     ];
 
     /**
