@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('bookmarks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->string('name')->nullable(false)->default('');
+            $table->string('image');
+            $table->string('url')->nullable(false);
+            $table->string('description')->default('');
+            $table->boolean('public')->nullable(false)->default(false);
             $table->timestamps();
         });
     }
