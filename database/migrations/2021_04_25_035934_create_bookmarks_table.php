@@ -4,6 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * @deprecated
+ */
 class CreateBookmarksTable extends Migration
 {
     /**
@@ -13,6 +16,7 @@ class CreateBookmarksTable extends Migration
      */
     public function up()
     {
+        // FIXME only user_id and uri need to be not-nullable
         Schema::create('bookmarks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();

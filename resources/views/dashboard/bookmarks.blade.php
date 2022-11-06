@@ -9,7 +9,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Title</th>
-            <th scope="col">URI</th>
+            <th scope="col">URL</th>
             <th scope="col">Description</th>
         </tr>
         </thead>
@@ -18,8 +18,8 @@
             <tr>
                 <th scope="row">{{ $data->id }}</th>
                 <td>{{ $data->title }}</td>
-                <td>{{ $data->uri }}</td>
-                <td>{{ $data->note }}</td>
+                <td>{{ $data->url }}</td>
+                <td>{{ $data->description }}</td>
             </tr>
         @endforeach
         </tbody>

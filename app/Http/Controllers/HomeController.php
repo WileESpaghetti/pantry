@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Bookmark;
 use Illuminate\Support\Facades\Auth;
+use Pantry\Bookmark;
 
 class HomeController extends Controller
 {
