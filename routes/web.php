@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,10 +25,12 @@ Route::get('/user/settings', [App\Http\Controllers\UserSettingController::class,
 Route::get('/help', [App\Http\Controllers\HelpController::class, 'index'])->name('help');
 Route::get('/feedback', [App\Http\Controllers\HelpController::class, 'feedback'])->name('feedback');
 
-Route::resource('folders', App\Http\Controllers\FolderController::class);
+Route::group(['middleware' => 'auth'], function() {
+    Route::resource('folders', App\Http\Controllers\FolderController::class);
+    Route::resource('bookmarks', App\Http\Controllers\BookmarkController::class);
+});
 //Route::get('tags', 'TagController@index');
 //Route::get('tags/create', 'TagController@create');
-//Route::get('bookmarks', 'BookmarkController@index');
 //Route::get('larder/import', 'LarderController@store');
 //Route::get('larder/tags/import', 'LarderController@storeTags');
 //Route::get('larder/bookmarks/import', 'LarderController@storeBookmarks');
