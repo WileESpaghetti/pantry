@@ -2,9 +2,12 @@
 
 namespace Larder\Observers;
 
-use App\Folder;
 use Larder\Services\LarderService;
+use Pantry\Folder;
 
+/*
+ * FIXME should probably split out the non-larder stuff into pantry-data observer
+ */
 class FolderObserver
 {
     /**
@@ -60,7 +63,7 @@ class FolderObserver
     /**
      * Handle the "saving" event.
      *
-     * @param  \App\Folder  $folder
+     * @param  \Pantry\Folder  $folder
      * @return bool
      */
     public function creating(Folder $folder): bool {
@@ -74,7 +77,7 @@ class FolderObserver
     /**
      * Handle the Folder "created" event.
      *
-     * @param  \App\Folder  $folder
+     * @param  \Pantry\Folder  $folder
      * @return void
      *
      * FIXME
@@ -90,7 +93,7 @@ class FolderObserver
     /**
      * Handle the Folder "updated" event.
      *
-     * @param  \App\Folder  $folder
+     * @param  \Pantry\Folder  $folder
      * @return void
      */
     public function updated(Folder $folder)
@@ -101,7 +104,7 @@ class FolderObserver
     /**
      * Handle the Folder "deleted" event.
      *
-     * @param  \App\Folder  $folder
+     * @param  \Pantry\Folder  $folder
      * @return void
      */
     public function deleted(Folder $folder)
@@ -112,7 +115,7 @@ class FolderObserver
     /**
      * Handle the Folder "restored" event.
      *
-     * @param  \App\Folder  $folder
+     * @param  \Pantry\Folder  $folder
      * @return void
      */
     public function restored(Folder $folder)
@@ -123,7 +126,7 @@ class FolderObserver
     /**
      * Handle the Folder "force deleted" event.
      *
-     * @param  \App\Folder  $folder
+     * @param  \Pantry\Folder  $folder
      * @return void
      */
     public function forceDeleted(Folder $folder)
