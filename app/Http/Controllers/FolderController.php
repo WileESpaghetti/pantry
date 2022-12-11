@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Folder;
 use App\Http\Requests\FolderStoreRequest;
 use App\Http\Requests\FolderUpdateRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
+use Pantry\Folder;
 
+/*
+ * TODO
+ * write tests that user can not update/delete other users' folders
+ */
 class FolderController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -75,7 +69,7 @@ class FolderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Folder  $folder
+     * @param  \Pantry\Folder  $folder
      * @return \Illuminate\Http\Response
      */
     public function show(Folder $folder)
@@ -86,7 +80,7 @@ class FolderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Folder  $folder
+     * @param  \Pantry\Folder  $folder
      * @return \Illuminate\Http\Response
      */
     public function edit(Folder $folder)
@@ -98,7 +92,7 @@ class FolderController extends Controller
      * Update the specified resource in storage.
      *
      * @param FolderUpdateRequest $request
-     * @param \App\Folder $folder
+     * @param \Pantry\Folder $folder
      * @return \Illuminate\Http\Response
      */
     public function update(FolderUpdateRequest $request, Folder $folder)
@@ -121,7 +115,7 @@ class FolderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Folder  $folder
+     * @param  \Pantry\Folder  $folder
      * @return \Illuminate\Http\Response
      *
      * FIXME
