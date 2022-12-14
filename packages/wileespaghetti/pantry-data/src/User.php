@@ -2,8 +2,9 @@
 
 namespace Pantry;
 
-use App\Bookmark;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Nabcellent\Laraconfig\HasConfig;
@@ -39,15 +40,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function identities() {
+    public function identities(): HasMany
+    {
         return $this->hasMany('App\SocialIdentity');
     }
 
     /**
      * Get the bookmarks for the user.
+     * @return HasMany
      */
-    public function bookmarks()
+    public function bookmarks(): HasMany
     {
         return $this->hasMany(Bookmark::class);
+    }
+
+    protected static function newFactory(): UserFactory
+    {
+        return new UserFactory;
     }
 }
