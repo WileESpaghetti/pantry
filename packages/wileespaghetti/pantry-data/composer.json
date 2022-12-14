@@ -12,8 +12,14 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "Pantry\\": "src"
-        }
+            "Pantry\\": "src/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        },
+        "classmap": [
+            "database/seeds",
+            "database/factories"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
