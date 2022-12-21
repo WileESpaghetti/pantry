@@ -11,6 +11,6 @@ class SocialIdentity extends Model
     protected $hidden = ['access_token', 'refresh_token'];
 
     public function user() {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('Pantry\User');
     }
 }

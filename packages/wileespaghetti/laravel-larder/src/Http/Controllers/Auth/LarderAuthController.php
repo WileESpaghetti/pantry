@@ -5,9 +5,9 @@ namespace Larder\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\SocialIdentity;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Pantry\User;
 use function redirect;
 
 
