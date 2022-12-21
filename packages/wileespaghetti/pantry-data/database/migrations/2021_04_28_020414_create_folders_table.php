@@ -19,8 +19,6 @@ class CreateFoldersTable extends Migration
             $table->string('color')->nullable(false)->default('');
             $table->foreignId('user_id')->nullable(false)->constrained();
             $table->timestamps();
-
-            $table->unique(['user_id', 'name']);
         });
     }
 
