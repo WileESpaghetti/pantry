@@ -1,25 +1,23 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Pantry;
 
-use App\Bookmark;
+use Database\Factories\TagFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Pantry\Traits\HasUser;
 
+// TODO evaluate the spatie laravel-tags package to see if it a better solution than having to be custom
 class Tag extends Model
 {
     use HasFactory, HasUser;
 
     protected $fillable = ['name', 'color'];
 
-    /**
-     * Get the user that owns the phone.
-     */
-    public function bookmark(): BelongsTo
+    protected static function newFactory(): TagFactory
     {
-        return $this->belongsTo(Bookmark::class);
+        return new TagFactory;
     }
 }
