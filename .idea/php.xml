@@ -134,6 +134,7 @@
       <path value="$PROJECT_DIR$/vendor/wileespaghetti/laravel-larder" />
       <path value="$PROJECT_DIR$/vendor/nunomaduro/termwind" />
       <path value="$PROJECT_DIR$/vendor/wileespaghetti/pantry-data" />
+      <path value="$PROJECT_DIR$/vendor/laravel/pint" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
