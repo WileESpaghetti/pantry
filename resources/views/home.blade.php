@@ -47,6 +47,8 @@
 
             @include('dashboard.bookmarks')
 
+            {{-- TODO show panel for currently running imort jobs --}}
+
         </div>
     </div>
 </div>
