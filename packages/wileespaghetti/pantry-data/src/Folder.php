@@ -1,8 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Pantry;
 
+use Database\Factories\FolderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Pantry\Traits\HasUser;
@@ -15,4 +17,9 @@ class Folder extends Model
      * `color` and `links` can be filled only because they are needed for the Larder API
      */
     protected $fillable = ['name', 'color', 'links'];
+
+    protected static function newFactory(): FolderFactory
+    {
+        return new FolderFactory;
+    }
 }
