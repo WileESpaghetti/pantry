@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('bookmark_files', function (Blueprint $table) {
             $table->id();
-            $table->string('file_name');
+            $table->foreignId('user_id')->constrained();
+            $table->string('file_name')->nullable(false);
             $table->string('file_name_original');
             $table->string('sha256sum');
             $table->integer('file_size_bytes');
