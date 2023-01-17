@@ -26,6 +26,7 @@
         "wileespaghetti/pantry-data": "*"
     },
     "require-dev": {
+        "enlightn/enlightn": "^2.1",
         "fakerphp/faker": "^1.9.1",
         "jasonmccreary/laravel-test-assertions": "^2.0",
         "laravel/pint": "^1.2",
