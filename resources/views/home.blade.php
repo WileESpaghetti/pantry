@@ -45,7 +45,7 @@
 
             @include('dashboard.file-upload')
 
-            @include('dashboard.bookmarks')
+            @include('dashboard.recent-bookmarks')
 
             {{-- TODO show panel for currently running imort jobs --}}
 

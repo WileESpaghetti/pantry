@@ -28,7 +28,7 @@ class HomeController extends Controller
         $notifications = $user->unreadNotifications;
 //        $notifications = $user->notifications;
 
-        $bookmarks = Bookmark::paginate(100);
+        $bookmarks = Bookmark::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(5);
 
         $notifications->markAsRead();
 
