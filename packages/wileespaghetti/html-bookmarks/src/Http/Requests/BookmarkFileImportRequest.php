@@ -10,21 +10,18 @@ use JetBrains\PhpStorm\ArrayShape;
 /**
  * TODO
  * custom error messages for file upload errors (ex. exceeded maximum size)
- *
- * FIXME
- * handle normal PHP upload issues (ex. file too large, wrong mime type, etc.)
- *
  */
 class BookmarkFileImportRequest extends FormRequest
 {
+    private const PARAM_UPLOADED_FILE = 'bookmark';
+
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @return bool
-     *
      * TODO
-     * add a role to allow uploads
-     * add a role to allow write
+     * check user can_upload and can_write (demo users)
+     *
+     * @return bool
      */
     public function authorize(): bool
     {
@@ -40,7 +37,7 @@ class BookmarkFileImportRequest extends FormRequest
      * @return array
      *
      * TODO
-     * limit to one file
+     * add parameter for which folder to import into when the import gets queued
      */
     #[ArrayShape(['bookmark' => "string"])] public function rules(): array
     {
@@ -49,14 +46,20 @@ class BookmarkFileImportRequest extends FormRequest
         ];
     }
 
+    public function hasBookmarkFile(): bool {
+        return $this->hasFile(self::PARAM_UPLOADED_FILE) && $this->getFile() != null;
+    }
+
     /**
-     * @return array|UploadedFile|UploadedFile[]|null
-     *
-     * FIXME
-     * might need to tweak this if we allow multiple files in the upload
+     * @return UploadedFile|null
      */
-    public function getFile(): array|UploadedFile|null
+    public function getFile(): UploadedFile|null
     {
-        return $this->file('bookmark');
+        $uploadedFile = $this->file(self::PARAM_UPLOADED_FILE);
+        if (is_array($uploadedFile)) {
+            $uploadedFile = null;
+        }
+
+        return $uploadedFile;
     }
 }
