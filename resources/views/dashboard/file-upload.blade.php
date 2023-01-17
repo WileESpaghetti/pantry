@@ -9,18 +9,16 @@ show max file upload limit
     <div class="card-header">{{ __('Upload Bookmarks File') }}</div>
 
     <div class="card-body">
-        @if (session('errors'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('errors') }}
-            </div>
-        @endif
+        @error('upload')
+            <div class="alert alert-danger" role="alert">{{ $message }}</div>
+        @enderror
         @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ __(session()->get('success')) }}
             </div>
         @endif
 
-        <form method="POST" action="bookmarks/import" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('bookmarks.import') }}" enctype="multipart/form-data">
             <label for="bookmark" class="form-label">{{ __('Select file to upload') }}</label>
             <div class="input-group">
                 <input type="file" class="form-control" name="bookmark" id="bookmark" accept="text/html">
