@@ -1,21 +1,41 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Jobs\ProcessBookmarks;
+use App\Http\Requests\BookmarkStoreRequest;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Pantry\Bookmark;
 
 class BookmarkController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Display a listing of the resource.
      *
-     * @return void
+     * @return Application|ViewFactory|View
      */
-    public function __construct()
+    public function index(): Application|ViewFactory|View
     {
-        $this->middleware('auth');
+        $bookmarks = Bookmark::paginate(100);
+
+        return view('bookmarks.index', ['notifications' => Collection::empty(), 'bookmarks' => $bookmarks]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Application|ViewFactory|View
+     */
+    public function create(): Application|ViewFactory|View
+    {
+        return view('bookmarks.create', ['notifications' => Collection::empty()]);
     }
 
     /**

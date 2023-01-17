@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
+<!--
+TODO
+add folder select
+
+TODO
+add tags
+-->
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -20,7 +27,7 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label for="name" class="form-label">{{__('URL')}}</label>
+                        <label for="url" class="form-label">{{__('URL')}}</label>
                         <input type="text" class="form-control @error('url') is-invalid @enderror" id="url" name="url" value="@if (old('url')) {{old('url')}} @endif" required>
                         @error('url')
                         <p class="invalid-feedback">
@@ -30,9 +37,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="title" class="form-label">{{__('Title')}}</label>
-                        <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="@if (old('title')) {{old('title')}} @endif" >
-                        @error('title')
+                        <label for="name" class="form-label">{{__('Title')}}</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="@if (old('name')) {{old('name')}} @endif" >
+                        @error('name')
                         <p class="invalid-feedback">
                             {{$message}}
                         </p>

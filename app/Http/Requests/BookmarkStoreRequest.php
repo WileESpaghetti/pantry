@@ -27,11 +27,11 @@ class BookmarkStoreRequest extends FormRequest
      *
      * @return array
      */
-    #[ArrayShape(['url' => 'string', 'title' => 'string', 'description' => 'string'])] public function rules(): array
+    #[ArrayShape(['url' => 'string', 'name' => 'string', 'description' => 'string'])] public function rules(): array
     {
         return [
             'url' => 'required|string|max:255',
-            'title' => 'nullable|string|max:255',
+            'name' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:255',
         ];
     }
