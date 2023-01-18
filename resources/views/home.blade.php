@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            @include('dashboard.larder')
+            @include('dashboard.my-data')
 
             @include('dashboard.file-upload')
 
