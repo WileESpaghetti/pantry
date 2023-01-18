@@ -13,6 +13,13 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        /**
+         * TODO
+         * use autodiscovery instead - https://laravel.com/docs/9.x/authorization#policy-auto-discovery
+         */
+        'Pantry\Bookmark' => 'Pantry\Policies\BookmarkPolicy',
+        'Pantry\Folder' => 'Pantry\Policies\FolderPolicy',
+        'Pantry\Tag' => 'Pantry\Policies\TagPolicy',
     ];
 
     /**
