@@ -10,6 +10,10 @@ Headers should be sortable?
         @include('tags.empty')
     </div>
 @else
+    <form class="visually-hidden" id="delete-tag" method="POST">
+        @csrf
+        @method('DELETE')
+    </form>
     <div class="container mt-5">
         {{-- Pagination --}}
         <div class="d-flex flex-row justify-content-between">
@@ -51,10 +55,10 @@ Headers should be sortable?
                     <th scope="row"><i class="fa fa-fw fa-circle" style="color: {{ $data->color }}"></i> {{ $data->id }}</th>
                     <td>{{-- link to the show() route --}}{{ $data->name }}</td>
                     <td>
-                        <a href="{{ route('tags.edit', $data->id) }}"><i class="fa fa-edit"></i></a>
+                        <a href="{{ route('tags.edit', $data->id) }}" class="btn btn-link p-0"><i class="fa fa-edit"></i></a>
 
-                        <!-- TODO replace with button and confirmation dialog -->
-                        <a href="{{ route('tags.destroy', $data->id) }}" class="ms-2"><i class="fa fa-trash"></i></a>
+                        <!-- TODO add confirmation dialog -->
+                        <button type="submit" class="btn btn-link p-0 ms-2" form="delete-tag" formaction="{{route('tags.destroy', $data->id)}}" ><i class="fa fa-trash"></i></button>
                         {{-- view on larder --}}
                         {{-- import from larder --}}
                         {{-- delete --}}

@@ -9,6 +9,7 @@ use App\Http\Requests\TagUpdateRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
@@ -122,6 +123,9 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->bookmarks()->detach();
+        $tag->delete();
+
+        return redirect('tags')->with('success', __('The tag :name has been deleted.', ['name' => $tag->name])); // FIXME make :name bold
     }
 }

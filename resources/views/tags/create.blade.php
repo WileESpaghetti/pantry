@@ -16,10 +16,10 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('tags.store') }}">
+                <form id="tag-create" method="POST" action="{{ route('tags.store') }}">
                     @csrf
 
-                    <div class="mb-3">
+                    <div class="row mb-3">
                         <label for="name" class="form-label">{{__('Name')}}</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="@if (old('name')) {{old('name')}} @endif" required>
                         @error('name')
@@ -29,8 +29,12 @@
                         @enderror
                     </div>
 
-                    <a href="{{url()->previous() != url()->current() ? url()->previous() : route('tags.index')}}" class="btn  btn-outline-secondary me-auto">{{__('Cancel')}}</a>
-                    <button type="submit" class="btn btn-primary me-auto m-1">{{__('Save Tag')}}</button>
+                    <div class="row">
+                        <div class="col g-0 text-end">
+                            <a href="{{url()->previous() != url()->current() ? url()->previous() : route('tags.index')}}" class="btn  btn-outline-secondary me-auto">{{__('Cancel')}}</a>
+                            <button type="submit" class="btn btn-primary me-auto m-1">{{__('Save Tag')}}</button>
+                        </div>
+                    </div>
                 </form>
 
             </div>
