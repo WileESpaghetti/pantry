@@ -79,7 +79,12 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        $bookmarks = $tag->bookmarks()->paginate(100);
+
+        // FIXME URL should use tag name instead of ID
+        // FIXME template needs to use tag name as the header
+        // FIXME needs tag specific empty template
+        return view('bookmarks.index', ['notifications' => Collection::empty(), 'bookmarks' => $bookmarks]);
     }
 
     /**
