@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Pantry\Traits\HasUser;
 
-// TODO evaluate the spatie laravel-tags package to see if it a better solution than having to be custom
 class Tag extends Model
 {
     use HasFactory, HasUser;
