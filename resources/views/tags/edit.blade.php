@@ -47,7 +47,7 @@ values
                     <div class="row">
                         @if(!empty($tag))
                         <div class="col g-0">
-                            <button type="submit" form="delete-tag"  class="btn btn-danger me-auto m-1 ms-0">{{__('Delete Tag')}}</button>
+                            <button type="submit" form="delete-tag"  class="btn btn-outline-danger me-auto m-1 ms-0">{{__('Delete Tag')}}</button>
                         </div>
                         @endif
                         <div class="col g-0 text-end">

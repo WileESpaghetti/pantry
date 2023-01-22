@@ -10,6 +10,10 @@ values
 -->
 
 @section('content')
+    <form class="visually-hidden" id="delete-folder" method="POST" action="{{route('folders.destroy', $folder->id)}}">
+        @csrf
+        @method('DELETE')
+    </form>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -25,11 +29,11 @@ values
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('folders.update', $folder) }}">
+                <form id="folder-edit" method="POST" action="{{ route('folders.update', $folder) }}">
                     @method('PUT')
                     @csrf
 
-                    <div class="mb-3">
+                    <div class="row mb-3">
                         <label for="name" class="form-label">{{__('Name')}}</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $folder->name) }}" required>
                         @error('name')
@@ -39,8 +43,17 @@ values
                         @enderror
                     </div>
 
-                    <a href="{{url()->previous() != url()->current() ? url()->previous() : route('folders.index')}}" class="btn  btn-outline-secondary me-auto">{{__('Cancel')}}</a>
-                    <button type="submit" class="btn btn-primary me-auto m-1">{{__('Save Folder')}}</button>
+                    <div class="row">
+                        @if(!empty($folder))
+                            <div class="col g-0">
+                                <button type="submit" form="delete-folder"  class="btn btn-outline-danger me-auto m-1 ms-0">{{__('Delete folder')}}</button>
+                            </div>
+                        @endif
+                        <div class="col g-0 text-end">
+                            <a href="{{url()->previous() != url()->current() ? url()->previous() : route('folders.index')}}" class="btn  btn-outline-secondary me-auto">{{__('Cancel')}}</a>
+                            <button type="submit" class="btn btn-primary me-auto m-1">{{__('Save Folder')}}</button>
+                        </div>
+                    </div>
                 </form>
 
             </div>

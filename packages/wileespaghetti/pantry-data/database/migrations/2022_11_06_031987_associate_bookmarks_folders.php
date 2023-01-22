@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('bookmarks', function(Blueprint $table) {
-            $table->foreignId('folder_id')->constrained()->nullOnDelete();
+            $table->foreignId('folder_id')->nullable(true)->constrained()->nullOnDelete();
         });
     }
 
