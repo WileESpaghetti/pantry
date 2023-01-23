@@ -24,4 +24,16 @@ return [
     'folder.update.success' => 'Successfully updated the folder ":name".',
     'folder.update.fail' => 'Could not update the folder ":name".',
     'folder.update.fail.event_handler' => 'Event handler failed while updating the folder ":name".',
+
+    'bookmark.delete.success' => 'Successfully deleted the bookmark ":name".',
+    'bookmark.delete.fail' => 'Could not delete the bookmark ":name".',
+    'bookmark.delete.fail.event_handler' => 'Event handler failed while deleting the bookmark ":name".',
+
+    'bookmark.create.success' => 'Successfully created the bookmark ":name".',
+    'bookmark.create.fail' => 'Could not create the bookmark ":name".',
+    'bookmark.create.fail.event_handler' => 'Event handler failed while creating the bookmark ":name".',
+
+    'bookmark.update.success' => 'Successfully updated the bookmark ":name".',
+    'bookmark.update.fail' => 'Could not update the bookmark ":name".',
+    'bookmark.update.fail.event_handler' => 'Event handler failed while updating the bookmark ":name".',
 ];

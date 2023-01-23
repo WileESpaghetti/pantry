@@ -5,10 +5,26 @@ filter bar should work
 FIXME
 Headers should be sortable?
 -->
-<div class="container mt-5">
-    @if (count($bookmarks) < 1)
+@if(session('errors'))
+    <div class="alert alert-danger">
+        <ul class="list-unstyled mb-0">
+            @foreach (session('errors') as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    <!-- TODO show delete success message -->
+@endif
+@if (count($bookmarks) < 1)
+    <div class="container mt-5">
         @include('bookmarks.empty')
-    @else
+    </div>
+@else
+<form class="visually-hidden" id="delete-bookmark" method="POST">
+    @csrf
+    @method('DELETE')
+</form>
+<div class="container mt-5">
     {{-- Pagination --}}
     <div class="d-flex flex-row justify-content-between">
         <form class="form-inline my-2 my-lg-0">
@@ -39,6 +55,7 @@ Headers should be sortable?
             <th scope="col">Title</th>
             <th scope="col">URL</th>
             <th scope="col">Description</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -48,6 +65,16 @@ Headers should be sortable?
                 <td>{{ $data->name }}</td>
                 <td>{{ $data->url }}</td>
                 <td>{{ $data->description }}</td>
+                <td>
+                    <a href="{{ route('bookmarks.edit', $data->id) }}" class="btn btn-link p-0"><i class="fa fa-edit"></i></a>
+
+                    <!-- TODO add confirmation dialog -->
+                    <button type="submit" class="btn btn-link p-0 ms-2" form="delete-bookmark" formaction="{{route('bookmarks.destroy', $data->id)}}" ><i class="fa fa-trash"></i></button>
+                    {{-- view on larder --}}
+                    {{-- import from larder --}}
+                    {{-- delete --}}
+                    {{-- empty --}}
+                </td>
             </tr>
         @endforeach
         </tbody>
