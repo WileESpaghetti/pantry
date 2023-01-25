@@ -9,7 +9,6 @@ use App\Http\Requests\TagUpdateRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
@@ -66,7 +65,7 @@ class TagController extends Controller
 
         if (!$tag) {
             return back()
-                ->withErrors(['save' => __('messages.tag.create.fail', ['name' => $tag->name])])
+                ->withErrors(['save' => __('messages.tag.create.fail', ['name' => $request->safe(['name'])['name']])])
                 ->withInput();
         }
 
@@ -84,7 +83,7 @@ class TagController extends Controller
     {
         $bookmarks = $tag->bookmarks()->paginate(self::DEFAULT_PAGE_SIZE);
 
-        return view('bookmarks.index', ['notifications' => Collection::empty(), 'bookmarks' => $bookmarks]);
+        return view('bookmarks.index', ['bookmarks' => $bookmarks]);
     }
 
     /**
@@ -109,8 +108,9 @@ class TagController extends Controller
     {
         $tag = $this->tagRepo->update($tag, $request->safe()->all());
         if (!$tag) {
-            return redirect('tags')
-                ->with('errors', [__('messages.tag.update.failed', ['name' => $tag->name])]);
+            return back()
+                ->withErrors('errors', [__('messages.tag.update.failed', ['name' => $request->safe('name')['name']])])
+                ->withInput();
         }
 
         return redirect('tags')
@@ -122,6 +122,12 @@ class TagController extends Controller
      *
      * @param Tag $tag
      * @return Application|Redirector|RedirectResponse
+     *
+     * TODO
+     * should log which bookmarks where modified
+     *
+     * TODO
+     * should tell how many bookmarks were modified
      */
     public function destroy(Tag $tag): Redirector|RedirectResponse|Application
     {

@@ -6,6 +6,9 @@ add folder select
 
 TODO
 add tags
+
+TODO
+not entirely happy with how errors are handled
 -->
 @section('content')
     <div class="container">

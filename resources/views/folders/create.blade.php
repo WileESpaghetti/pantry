@@ -16,7 +16,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('folders.store') }}">
+                <form id="folder-create" method="POST" action="{{ route('folders.store') }}">
                     @csrf
 
                     <div class="row mb-3">

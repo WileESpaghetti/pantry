@@ -19,16 +19,13 @@ values
             <div class="col-md-8">
                 <h1>{{__('Edit Tag: :name', ['name' => $tag->name])}}</h1>
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="list-unstyled mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
+                @error('error')
+                <div class="alert alert-danger">
+                    <ul class="list-unstyled mb-0">
+                        <li>{{ $message }}</li>
+                    </ul>
+                </div>
+                @enderror
 
                 <form id="tag-edit" method="POST" action="{{ route('tags.update', $tag) }}">
                     @method('PUT')

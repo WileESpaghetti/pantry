@@ -7,6 +7,9 @@ merge with the create form
 TODO
 if this gets more complicated then it might be nice to add a reset button that sets everything back to the current
 values
+
+FIXME
+not entirely happy with error handling
 -->
 
 @section('content')
@@ -19,15 +22,13 @@ values
             <div class="col-md-8">
                 <h1>{{__('Edit Folder: :name', ['name' => $folder->name])}}</h1>
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul class="list-unstyled mb-0">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                @error('error')
+                <div class="alert alert-danger">
+                    <ul class="list-unstyled mb-0">
+                        <li>{{ $message }}</li>
+                    </ul>
+                </div>
+                @enderror
 
                 <form id="folder-edit" method="POST" action="{{ route('folders.update', $folder) }}">
                     @method('PUT')

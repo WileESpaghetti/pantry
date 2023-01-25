@@ -9,7 +9,6 @@ use App\Http\Requests\FolderUpdateRequest;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
@@ -66,7 +65,7 @@ class FolderController extends Controller
 
         if (!$folder) {
             return back()
-                ->withErrors(['save' => __('messages.folder.create.fail', ['name' => $folder->name])])
+                ->withErrors(['save' => __('messages.folder.create.fail', ['name' => $request->safe(['name'])['name']])])
                 ->withInput();
         }
 
@@ -84,7 +83,7 @@ class FolderController extends Controller
     {
         $bookmarks = $folder->bookmarks()->paginate(self::DEFAULT_PAGE_SIZE);
 
-        return view('bookmarks.index', ['notifications' => Collection::empty(), 'bookmarks' => $bookmarks]);
+        return view('bookmarks.index', ['bookmarks' => $bookmarks]);
     }
 
     /**
@@ -109,11 +108,12 @@ class FolderController extends Controller
     {
         $folder = $this->folderRepo->update($folder, $request->safe()->all());
         if (!$folder) {
-            return redirect('folders.list')
-                ->with('errors', [__('messages.folder.update.failed', ['name' => $folder->name])]);
+            return back()
+                ->withErrors(['error' => __('messages.folder.update.failed', ['name' => $request->safe('name')['name']])])
+                ->withInput();
         }
 
-        return redirect('folders.list')
+        return redirect('folders')
             ->with('success', __('messages.folder.update.success', ['name' => $folder->name]));
     }
 
