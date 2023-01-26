@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('bookmarks', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable(false)->default('');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('url')->nullable(false);
             $table->string('description')->nullable(false)->default('');
             $table->boolean('public')->nullable(false)->default(false);
