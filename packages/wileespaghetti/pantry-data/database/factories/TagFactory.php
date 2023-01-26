@@ -5,6 +5,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Pantry\Tag;
+use Pantry\User;
 
 /**
  * @extends Factory<Tag>
@@ -25,6 +26,7 @@ class TagFactory extends Factory
             'color' => $this->faker->hexColor(),
             'updated_at' => now(),
             'created_at' => $this->faker->date(),
+            'user_id' => User::all()->random()->id,
         ];
     }
 }
