@@ -9,7 +9,6 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
     "autoload": {
         "psr-4": {
             "Pantry\\": "src/",
@@ -29,7 +28,16 @@
     "extra": {
         "laravel": {
             "providers": [
+              "Pantry\\Providers\\PantryDataPackageServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.x-dev"
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php vendor/bin/testbench package:discover --ansi"
+        ]
     }
 }
