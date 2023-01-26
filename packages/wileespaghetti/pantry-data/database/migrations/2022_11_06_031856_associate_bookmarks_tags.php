@@ -15,12 +15,10 @@ return new class extends Migration
     {
         Schema::create('bookmark_tag', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('bookmark_id');
-            $table->unsignedBigInteger('tag_id');
-            $table->timestamps();
-
             $table->foreignId('bookmark_id')->constrained()->cascadeOnDelete();
             $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
+
 
             $table->unique(['bookmark_id', 'tag_id']);
         });
