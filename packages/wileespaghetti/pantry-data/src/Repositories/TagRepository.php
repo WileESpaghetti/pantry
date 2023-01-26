@@ -46,6 +46,11 @@ class TagRepository {
         return $tag;
     }
 
+    /**
+     * @param Tag $tag
+     * @param array $data
+     * @return Tag|null fresh Model
+     */
     public function update(Tag $tag, array $data): Tag|null {
         try {
             $wasUpdated = $tag->updateOrFail($data);
@@ -62,7 +67,7 @@ class TagRepository {
             return null;
         }
 
-        return $tag;
+        return $tag->fresh();
     }
 
     public function delete(Tag $tag): bool {
