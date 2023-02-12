@@ -56,8 +56,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "SocialiteProviders\\Larder\\": "SocialiteProviders/src/Larder/",
             "Larder\\": "packages/wileespaghetti/laravel-larder/src/",
-            "HtmlBookmarks\\": "packages/wileespaghetti/html-bookmarks/src/",
-            "Pantry\\": "packages/wileespaghetti/pantry-data/src/"
+            "HtmlBookmarks\\": "packages/wileespaghetti/html-bookmarks/src/"
         },
         "classmap": [
             "database/seeds",

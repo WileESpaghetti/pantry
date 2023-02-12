@@ -1,10 +1,24 @@
 <!--
 FIXME
+use tag name as header
+
+FIXME
 filter bar should work
 
 FIXME
 Headers should be sortable?
 -->
+@if(session('errors'))
+    <div class="alert alert-danger">
+        <ul class="list-unstyled mb-0">
+            @foreach (session('errors') as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    <!-- TODO show delete success message -->
+@endif
+
 @if (count($tags) < 1)
     <div class="container mt-5">
         @include('tags.empty')

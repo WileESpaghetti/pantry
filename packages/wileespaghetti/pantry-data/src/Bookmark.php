@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Pantry\Traits\HasUser;
 
+// TODO may want to add a `getDisplayName()` function to encapsulate showing URL if the title is not specified
 class Bookmark extends Model
 {
     use HasFactory, HasUser;

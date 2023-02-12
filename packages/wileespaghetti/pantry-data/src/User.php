@@ -11,7 +11,7 @@ use Nabcellent\Laraconfig\HasConfig;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasConfig;
+    use HasFactory, Notifiable/*, HasConfig*/;
 
     /**
      * The attributes that are mass assignable.
