@@ -7,12 +7,23 @@ namespace Pantry\Repositories;
 use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Pantry\Tag;
 use Pantry\User;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
-// TODO handle specific SQL errors
+
+/**
+ * TODO
+ * handle specific SQL errors
+ *
+ * TODO
+ * Tag names should be slugs.
+ * Does it make sense to do this at the model attribute layer instead the service layer?
+ *
+ */
 class TagRepository {
     private DatabaseManager $db;
     private LoggerInterface $log;
@@ -24,8 +35,16 @@ class TagRepository {
         $this->user = $user;
     }
 
-    public function createForUser(User $user, $data): Tag|null {
-        $tag = Tag::make($data);
+    private function sanitize(array $tagData): array {
+        $sanitized = $tagData;
+        $sanitized['name'] = Str::slug($tagData['name']);
+        return $sanitized;
+    }
+
+    public function createForUser(User $user, array $data): Tag|null {
+        $cleanTagData = $this->sanitize($data);
+
+        $tag = Tag::make($cleanTagData);
         $tag->user()->associate($user);
 
         try {
@@ -44,6 +63,57 @@ class TagRepository {
         }
 
         return $tag;
+    }
+
+    /**
+     * @param User $user
+     * @param array $data
+     * @return Collection
+     *
+     * FIXME
+     * should this be in a transaction?
+     *
+     * FIXME
+     * this should work similarly to the laravel createMany functions
+     */
+    public function createManyForUser(User $user, array $data): Collection {
+        return collect($data)->map(function ($tagData) use ($user) {
+            return $this->createForUser($user, $tagData); // FIXME fails silently and returns null if the tag is already created
+        });
+    }
+
+    /**
+     * @param User $user
+     * @param string[] $tagNames
+     * @return Collection
+     */
+    public function upsertForUser(User $user, array $tagNames): Collection {
+        // FIXME not sure if this function fires events
+        $tagData = collect($tagNames)
+            ->map(function ($tagName) use ($user) {
+                return [
+                    'name' => $tagName,
+                    'user_id' => $user->id,
+//                        'color' => $this->faker->hexColor(), // FIXME this will overwrite previously assigned colors, but is used as a work around of the `NOT NULL` constraint
+                ];
+            })->all();
+
+        try {
+            $this->db->transaction(function () use ($user, $tagData) {
+                $affectedRows = Tag::upsert($tagData, ['user_id', 'name'], ['name']); // FIXME see if upsert is already run in a transaction
+                if (!$affectedRows) { // FIXME check effected rows match input length
+                    throw new Exception(__('messages.tag.upsert.fail')); // FIXME might add an expected/actual with our utility func to calculate inserts/updates
+                }
+            });
+        } catch (Throwable $e) {
+            $this->log->error(__('messages.tag.upsert.fail'), [
+                'user' => $this->user?->getAuthIdentifier(),
+                'tags' => $tagData,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        return Tag::whereBelongsTo($user)->whereIn('name', $tagNames)->get(); // FIXME what is the result of this when no results?
     }
 
     /**

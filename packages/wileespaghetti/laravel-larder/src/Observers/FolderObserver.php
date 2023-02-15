@@ -69,9 +69,9 @@ class FolderObserver
     public function creating(Folder $folder): bool {
         $this->setRandomColor($folder);
 
-        $isSyncedToLarder = $this->saveToLarder($folder);
+//        $isSyncedToLarder = $this->saveToLarder($folder);
 
-        return $isSyncedToLarder;
+        return true; //$isSyncedToLarder;
     }
 
     /**

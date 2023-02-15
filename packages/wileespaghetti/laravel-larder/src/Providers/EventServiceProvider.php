@@ -2,13 +2,9 @@
 
 namespace Larder\Providers;
 
-use App\Bookmark;
-use App\Folder;
-use App\Tag;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Larder\Observers\BookmarkObserver;
 use Larder\Observers\FolderObserver;
-use Larder\Observers\TagObserver;
+use Pantry\Folder;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 
 class EventServiceProvider extends ServiceProvider

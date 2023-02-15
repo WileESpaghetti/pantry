@@ -7,14 +7,25 @@ namespace Pantry\Repositories;
 use Exception;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\DatabaseManager;
+use Illuminate\Support\Collection;
 use Pantry\Bookmark;
 use Pantry\User;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
-// TODO handle specific SQL errors
-// TODO add folder support
-// TODO add tag support
+/**
+ * TODO
+ * handle specific SQL errors
+ *
+ * TODO
+ * sanitize bookmark data
+ *
+ * TODO
+ * add folder support
+ *
+ * TODO
+ * add tag support
+ */
 class BookmarkRepository {
     private DatabaseManager $db;
     private LoggerInterface $log;
@@ -26,7 +37,15 @@ class BookmarkRepository {
         $this->user = $user;
     }
 
+    public function createManyForUser(User $user, array $bookmarkData, array $tagData): Collection {
+//            $bookmark = Bookmark::make($bookmarkData);
+//            $bookmark->user()->associate($this->user);
+//            $bookmark->tags()->attach();
+//            return $bookmark;
+    }
+
     public function createForUser(User $user, $data): Bookmark|null {
+        // FIXME add tag support
         $bookmark = Bookmark::make($data);
         $bookmark->user()->associate($user);
 
