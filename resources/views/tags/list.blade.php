@@ -67,7 +67,7 @@ Headers should be sortable?
             @foreach($tags as $data)
                 <tr>
                     <th scope="row"><i class="fa fa-fw fa-circle" style="color: {{ $data->color }}"></i> {{ $data->id }}</th>
-                    <td>{{-- link to the show() route --}}{{ $data->name }}</td>
+                    <td>{{-- link to the show() route --}}<a href="{{route('tags.show', $data->id)}}">{{ $data->name }}</a></td>
                     <td>
                         <a href="{{ route('tags.edit', $data->id) }}" class="btn btn-link p-0"><i class="fa fa-edit"></i></a>
 
