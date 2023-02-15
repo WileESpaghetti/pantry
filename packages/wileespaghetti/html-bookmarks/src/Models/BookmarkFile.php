@@ -22,6 +22,8 @@ class BookmarkFile extends Model
     ];
 
     protected $hidden = [
-        'path', // do not leak where the server stores the bookmark files
+        // hide stuff that might leak server storage paths
+        'path',
+        'file_name',
     ];
 }

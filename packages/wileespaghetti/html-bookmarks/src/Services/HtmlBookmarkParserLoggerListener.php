@@ -6,6 +6,7 @@ namespace HtmlBookmarks\Services;
 use JetBrains\PhpStorm\ArrayShape;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Acts as a proxy to the Laravel default logger and the one used by NetscapeBookmarkParser
@@ -25,6 +26,9 @@ use Psr\Log\LoggerInterface;
  *
  * TODO
  * create proper event listener / event creator interfaces
+ *
+ * TODO
+ * tie found tags/bookmarks to a specific line number(s)
  */
 class HtmlBookmarkParserLoggerListener implements LoggerInterface, LoggerAwareInterface
 {
@@ -105,6 +109,7 @@ class HtmlBookmarkParserLoggerListener implements LoggerInterface, LoggerAwareIn
                 break;
             case preg_match(self::PATTERN_CONTENT_EMPTY, $message, $matches) > 0:
                 $context['line_number'] = $matches[1];
+                $context['log_level'] = LogLevel::DEBUG;
                 break;
             case preg_match(self::PATTERN_TAG_LIST, $message, $matches) > 0:
                 $context['line_number'] = $matches[1];
