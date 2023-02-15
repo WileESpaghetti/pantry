@@ -68,7 +68,7 @@ Headers should be sortable?
     @foreach($folders as $data)
         <tr>
             <th scope="row"><i class="fa fa-fw fa-circle" style="color: {{ "#" . $data->color }}"></i> {{ $data->id }}</th>
-            <td>{{-- link to the show() route --}}{{ $data->name }}</td>
+            <td><a href="{{route('folders.show', $data->id)}}">{{ $data->name }}</a></td>
             <td>{{ $data->links }}</td>
             <td>
                 <a href="{{ route('folders.edit', $data->id) }}" class="btn btn-link p-0"><i class="fa fa-edit"></i></a>

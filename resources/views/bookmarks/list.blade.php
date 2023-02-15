@@ -15,7 +15,7 @@ Headers should be sortable?
     </div>
     <!-- TODO show delete success message -->
 @endif
-@if (count($bookmarks) < 1)
+@if (empty($isContainer) && count($bookmarks) < 1)
     <div class="container mt-5">
         @include('bookmarks.empty')
     </div>

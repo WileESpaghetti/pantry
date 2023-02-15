@@ -83,7 +83,7 @@ class FolderController extends Controller
     {
         $bookmarks = $folder->bookmarks()->paginate(self::DEFAULT_PAGE_SIZE);
 
-        return view('bookmarks.index', ['bookmarks' => $bookmarks]);
+        return view('bookmarks.index', ['isContainer' => true, 'bookmarks' => $bookmarks]);
     }
 
     /**
