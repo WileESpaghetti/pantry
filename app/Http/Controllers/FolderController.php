@@ -81,7 +81,7 @@ class FolderController extends Controller
      */
     public function show(Folder $folder): Application|View|ViewFactory
     {
-        $bookmarks = $folder->bookmarks()->paginate(self::DEFAULT_PAGE_SIZE);
+        $bookmarks = $folder->bookmarks()->with('tags')->paginate(self::DEFAULT_PAGE_SIZE);
 
         return view('bookmarks.index', ['isContainer' => true, 'bookmarks' => $bookmarks]);
     }

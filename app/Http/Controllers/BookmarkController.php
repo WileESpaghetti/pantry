@@ -31,7 +31,7 @@ class BookmarkController extends Controller
     public function index(): Application|View|ViewFactory
     {
         $user = Auth::user();
-        $bookmarks = Bookmark::whereBelongsTo($user)->paginate(self::DEFAULT_PAGE_SIZE);
+        $bookmarks = Bookmark::with('tags')->whereBelongsTo($user)->paginate(self::DEFAULT_PAGE_SIZE);
 
         return view('bookmarks.index', ['bookmarks' => $bookmarks]);
     }

@@ -55,6 +55,7 @@ Headers should be sortable?
             <th scope="col">Title</th>
             <th scope="col">URL</th>
             <th scope="col">Description</th>
+            <th scope="col">Tags</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -65,6 +66,11 @@ Headers should be sortable?
                 <td>{{ $data->name }}</td>
                 <td>{{ $data->url }}</td>
                 <td>{{ $data->description }}</td>
+                <td>
+                    @foreach($data->tags as $tag)
+                        <a href="{{route('tags.show', ['tag' => $tag->id])}}">{{ $tag->name }}</a>
+                    @endforeach
+                </td>
                 <td>
                     <a href="{{ route('bookmarks.edit', $data->id) }}" class="btn btn-link p-0"><i class="fa fa-edit"></i></a>
 

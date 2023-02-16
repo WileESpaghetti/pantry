@@ -81,7 +81,7 @@ class TagController extends Controller
      */
     public function show(Tag $tag): Application|View|ViewFactory
     {
-        $bookmarks = $tag->bookmarks()->paginate(self::DEFAULT_PAGE_SIZE);
+        $bookmarks = $tag->bookmarks()->with('tags')->paginate(self::DEFAULT_PAGE_SIZE);
 
         return view('bookmarks.index', ['isContainer' => true, 'bookmarks' => $bookmarks]);
     }
