@@ -13,14 +13,18 @@ use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Pantry\Repositories\BookmarkRepository;
 use Pantry\Bookmark;
+use Pantry\Repositories\TagRepository;
 
 class BookmarkController extends Controller
 {
     const DEFAULT_PAGE_SIZE = 25; // FIXME read from configuration setting
     private BookmarkRepository $bookmarkRepo;
-    public function __construct(BookmarkRepository $bookmarkRepo)
+    private TagRepository $tagRepository;
+
+    public function __construct(BookmarkRepository $bookmarkRepo, TagRepository $tagRepository)
     {
         $this->bookmarkRepo = $bookmarkRepo;
+        $this->tagRepository = $tagRepository;
     }
 
     /**
@@ -85,6 +89,9 @@ class BookmarkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * FIXME
+     * might want to eagerly fetch tags and folder to save a query
+     *
      * @param Bookmark $bookmark
      * @return Application|View|ViewFactory
      */
@@ -102,6 +109,14 @@ class BookmarkController extends Controller
      */
     public function update(BookmarkUpdateRequest $request, Bookmark $bookmark): Redirector|RedirectResponse|Application
     {
+        $tags = $request->only('tags')['tags'];
+        $tags = empty($tags) ? [] : preg_split('/,* +/', $tags, -1, PREG_SPLIT_NO_EMPTY);
+        if ($tags === false) {
+            throw new \Exception('splitting tags failed unexpectidly');
+        }
+        $tags = $this->tagRepository->upsertForUser(Auth::user(), $tags);
+
+        $bookmark->tags()->sync($tags->pluck('id')); // FIXME needs transaction
         $bookmark = $this->bookmarkRepo->update($bookmark, $request->safe()->all());
         if (!$bookmark) {
             return back() // FIXME this doesn't properly send errors to the frontend

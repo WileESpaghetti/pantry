@@ -33,6 +33,7 @@ class BookmarkStoreRequest extends FormRequest
             'url' => 'required|string|max:255',
             'name' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:255',
+            'tags' => 'nullable|string|max:255',
         ];
     }
 }

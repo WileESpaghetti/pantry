@@ -37,7 +37,7 @@ class TagRepository {
 
     private function sanitize(array $tagData): array {
         $sanitized = $tagData;
-        $sanitized['name'] = Str::slug($tagData['name']);
+        $sanitized['name'] = Str::slug($tagData['name']); // FIXME might want to tweak this so that you can have tags like '.net'
         return $sanitized;
     }
 
