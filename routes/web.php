@@ -25,12 +25,6 @@ Route::get('/user/settings', [App\Http\Controllers\UserSettingController::class,
 Route::get('/help', [App\Http\Controllers\HelpController::class, 'index'])->name('help');
 Route::get('/feedback', [App\Http\Controllers\HelpController::class, 'feedback'])->name('feedback');
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::resource('tags', App\Http\Controllers\TagController::class);
-    Route::resource('folders', App\Http\Controllers\FolderController::class);
-    Route::resource('bookmarks', App\Http\Controllers\BookmarkController::class);
-});
-
 //Route::get('larder/import', 'LarderController@store');
 //Route::get('larder/tags/import', 'LarderController@storeTags');
 //Route::get('larder/bookmarks/import', 'LarderController@storeBookmarks');
