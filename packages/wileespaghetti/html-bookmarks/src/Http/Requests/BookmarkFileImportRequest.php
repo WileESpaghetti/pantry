@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace HtmlBookmarks\Http\Requests;
 
+use HtmlBookmarks\Rules\SimpleFileName;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
 use JetBrains\PhpStorm\ArrayShape;
@@ -42,7 +43,7 @@ class BookmarkFileImportRequest extends FormRequest
     #[ArrayShape(['bookmark' => "string"])] public function rules(): array
     {
         return [
-            'bookmark' => 'required|mimes:htm,html',
+            'bookmark' => ['required', 'mimes:htm,html', new SimpleFileName()],
         ];
     }
 
