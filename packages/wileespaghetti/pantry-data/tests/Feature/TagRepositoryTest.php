@@ -76,16 +76,14 @@ class TagRepositoryTest extends TestCase
         $bookmark->tags()->save($tag);
         $bookmark = $bookmark->fresh();
         $tag = $tag->fresh();
-        $this->assertEquals(1, count($bookmark->tags));
-        $this->assertEquals(1, count($tag->bookmarks));
+        $this->assertCount(1, $bookmark->tags);
+        $this->assertCount(1, $tag->bookmarks);
 
         $wasDeleted = $repo->delete($tag);
         $bookmark = $bookmark->fresh();
 
         $this->assertTrue($wasDeleted);
         $this->assertDatabaseCount('tags', 0);
-        $this->assertEquals(0, count($bookmark->tags));
-
-
+        $this->assertCount(0, $bookmark->tags);
     }
 }
