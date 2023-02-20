@@ -6,6 +6,7 @@ namespace Pantry;
 use Database\Factories\BookmarkFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Pantry\Traits\HasUser;
 
@@ -21,9 +22,9 @@ class Bookmark extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function folders(): BelongsToMany
+    public function folder(): BelongsTo
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsTo(Folder::class);
     }
 
     protected static function newFactory(): BookmarkFactory
