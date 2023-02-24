@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pantry\Repositories;
 
 use Exception;
+use Illuminate\Auth\AuthManager;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Support\Collection;
@@ -23,13 +24,18 @@ use Throwable;
  * Tag names should be slugs.
  * Does it make sense to do this at the model attribute layer instead the service layer?
  *
+ * FIXME
+ * $this->user doesn't get set properly. probably not available until later
+ *
  */
 class TagRepository {
+    private AuthManager $auth;
     private DatabaseManager $db;
     private LoggerInterface $log;
     private ?Authenticatable $user;
 
-    public function __construct(LoggerInterface $log, DatabaseManager $db, ?Authenticatable $user) {
+    public function __construct(LoggerInterface $log, DatabaseManager $db, AuthManager $auth, ?Authenticatable $user) {
+        $this->auth = $auth;
         $this->db = $db;
         $this->log = $log;
         $this->user = $user;
@@ -140,6 +146,56 @@ class TagRepository {
         return $tag->fresh();
     }
 
+    /*
+     * FIXME
+     * needs to integrate with TagPolicy/Gates to ensure policy doesn't allow deleting other user's data
+     * and so that we don't have to pass in the user_id
+     *
+     * TODO
+     * test what happens when only a few of the passed in tags can be deleted
+     *
+     * FIXME
+     * not sure what the return type of this function should be
+     *
+     * FIXME
+     * does it make sense to allow using tag names instead of/in addition to IDs?
+     */
+    public function deleteMany(array $tagIds): bool {
+        $this->user = $this->auth->user(); // FIXME hacky workaround for user not being null in the constructor
+
+        try {
+            $allowedTags = Tag::where('user_id', $this->user->getAuthIdentifier())
+                ->whereIn('id', $tagIds)
+                ->get('id')
+                ->pluck('id');
+
+            // FIXME hacky workaround instead of using policy/gate checks in the query
+            $unauthorizedTags = collect($tagIds)->diff($allowedTags);
+            if ($unauthorizedTags->isNotEmpty()) {
+                $this->log->error(__('tag.delete_many.unauthorized'), [
+                    'tags' => $tagIds,
+                    'user' => $this->user->getAuthIdentifier()
+                ]);
+                throw new Exception(__('tag.delete_many.unauthorized')); // FIXME is this the correct exception type?
+            }
+
+            Tag::whereIn('id', $tagIds)->delete();
+        } catch (Throwable $e) {
+            $tagIds = implode(', ', $tagIds);
+
+            $this->log->error(__('tag.delete_many.fail', ['tags' => $tagIds]), [
+                'user' => $this->user?->getAuthIdentifier(),
+                'tags' => $tagIds,
+                'message' => $e->getMessage()
+            ]);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    // FIXME ensure policy doesn't allow deleting other user's data
     public function delete(Tag $tag): bool {
         try {
             $this->db->transaction(function() use ($tag) {

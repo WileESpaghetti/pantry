@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagDeleteManyRequest;
 use App\Http\Requests\TagStoreRequest;
 use App\Http\Requests\TagUpdateRequest;
 use Illuminate\Contracts\Foundation\Application;
@@ -32,7 +33,7 @@ class TagController extends Controller
     public function index(): Application|View|ViewFactory
     {
         $user = Auth::user();
-        $tags = Tag::whereBelongsTo($user)->paginate(self::DEFAULT_PAGE_SIZE);
+        $tags = Tag::whereBelongsTo($user)->orderBy('name')->paginate(self::DEFAULT_PAGE_SIZE);
 
         return view('tags.index', ['tags' => $tags]);
     }
@@ -115,6 +116,20 @@ class TagController extends Controller
 
         return redirect('tags')
             ->with('success', __('messages.tag.update.success', ['name' => $tag->name]));
+    }
+
+    public function deleteMany(TagDeleteManyRequest $deleteTagsRequest) {
+        $tagIds = $tags = $deleteTagsRequest->safe()->tags;
+        if (empty($tags)) {
+            return back()
+                ->withErrors('errors', [__('messages.tag.delete_many.failed'), ['tags' => $deleteTagsRequest->safe()->only(['tags'])]])
+                ->withInput();
+        }
+
+        $this->tagRepo->deleteMany($tagIds);
+
+        return redirect('tags')
+            ->with('success', __('messages.tag.deleteMany.success', ['tagNames' => implode(', ', ['FIXME tag names here'])]));
     }
 
     /**

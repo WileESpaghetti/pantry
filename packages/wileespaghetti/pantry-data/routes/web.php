@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['web', 'auth']], function() {
+    Route::delete('tags', [App\Http\Controllers\TagController::class, 'deleteMany'])->name('tags.destroyMany');
     Route::resource('tags', App\Http\Controllers\TagController::class);
     Route::resource('folders', App\Http\Controllers\FolderController::class);
     Route::resource('bookmarks', App\Http\Controllers\BookmarkController::class);
