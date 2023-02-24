@@ -16,7 +16,7 @@ class PantryDataPackageServiceProvider extends ServiceProvider {
     {
         // TODO test routes exist as part of testing controllers
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-//        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
         $this->loadTranslationsFrom(__DIR__.'/../../lang', 'pantry');
 
         if ($this->app->runningInConsole()) {

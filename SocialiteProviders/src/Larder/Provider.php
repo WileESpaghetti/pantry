@@ -5,8 +5,6 @@ namespace SocialiteProviders\Larder;
 use SocialiteProviders\Manager\OAuth2\AbstractProvider;
 use SocialiteProviders\Manager\OAuth2\User;
 
-// FIXME move some of this logic to the LarderService
-// FIXME use config values for some of the URLs
 class Provider extends AbstractProvider
 {
     /**
@@ -59,7 +57,6 @@ class Provider extends AbstractProvider
             'nickname' => $user['username'],
             'name'     => trim(implode(' ', [$user['first_name'], $user['last_name']])),
             'avatar'   => $user['avatar'],
-//            'email' => "{$user['username']}@example.com"
         ]);
     }
 

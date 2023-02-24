@@ -6,7 +6,6 @@ namespace HtmlBookmarks\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use HtmlBookmarks\Http\Requests\BookmarkFileImportRequest;
-use HtmlBookmarks\Jobs\ProcessBookmarks;
 use HtmlBookmarks\Models\BookmarkFile;
 use HtmlBookmarks\Services\HtmlBookmarkService;
 use Illuminate\Http\RedirectResponse;
@@ -19,27 +18,14 @@ class HtmlBookmarkController extends Controller
 
     public function __construct(LoggerInterface $logger) {
         $this->log = $logger;
-            $this->middleware('auth');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  BookmarkFileImportRequest  $request
+     * @param BookmarkFileImportRequest $request
+     * @param HtmlBookmarkService $htmlBookmarkService
      * @return RedirectResponse
-     *
-     * FIXME
-     * when serving static files add the content-dispostion attachment and nosniff headers
-     *
-     * FIXME
-     * add some sort of middleware that blocks access to the storage folder by user, or better yet prevents serving
-     * that directory entirely
-     *
-     * FIXME
-     * should validate/sanitize original file name for user downloads
-     *
-     * FIXME
-     * should return a view for the file import details
      */
     public function store(BookmarkFileImportRequest $request, HtmlBookmarkService $htmlBookmarkService): RedirectResponse
     {
@@ -54,9 +40,8 @@ class HtmlBookmarkController extends Controller
                 ->withErrors('upload', __('htmlbookmarks::upload.failure'));
         }
 
-        ProcessBookmarks::dispatch($metadata->path, $user, null);
-
-        return redirect('bookmarks.files.show')
+        return redirect()
+            ->route('imports.index')
             ->with('success', __('htmlbookmarks::import.started'));
     }
 

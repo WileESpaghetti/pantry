@@ -14,6 +14,9 @@ use function redirect;
 /**
  * TODO
  * handle 401 error
+ *
+ * TODO
+ * a lot of this can be moved to a service
  */
 class LarderAuthController extends Controller
 {
@@ -32,7 +35,6 @@ class LarderAuthController extends Controller
         $user = Socialite::with(static::$provider)->stateless()->user();
 
         $authUser = $this->findOrCreateUser($user, static::$provider);
-        Auth::login($authUser);
 
         foreach($authUser->identities as $social) {
             $isCurrentProvider = $social->provider_name === static::$provider;
@@ -46,6 +48,8 @@ class LarderAuthController extends Controller
             }
         }
 
+        Auth::login($authUser);
+
         return redirect($this->redirectTo);
     }
 
@@ -58,7 +62,7 @@ class LarderAuthController extends Controller
             return $account->user;
         } else {
             $user = User::create([
-                'email' => $providerUser->getEmail(),
+                'email' => $providerUser->getEmail() ?? '',
                 'name'  => $providerUser->getName(),
             ]);
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HtmlBookmarks\Jobs;
 
+use App\BookmarkFileImport;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
@@ -12,6 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Pantry\Repositories\BookmarkRepository;
 use Pantry\Repositories\FolderRepository;
@@ -22,16 +24,6 @@ use Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser;
 use Throwable;
 
 /*
- * These might not be needed if we have the import process just add new bookmarks and then allow the user to manually
- * clean up later with provided cleanup tools.
- *
- * TODO
- * user will have to approve the import before things get synced. Then bookmarks will be in read-only until sync finishes.
- * This might not be needed if we have imports simply add and then offer audit tools to clean up bookmarks.
- *
- */
-
-/*
  * Import structure
  *
  * FIXME
@@ -40,19 +32,18 @@ use Throwable;
  * from the service.
  *
  * TODO
- * parts of this might be good to be generic in the bookmark handling so that larder imports can be bulk manipulated a similar way
+ * not sure if it makes sense to have some sort of service build the job. Advantages is that we can consistently do
+ * stuff like creating with the same config values each time
+ *
+ * TODO
+ * parts of this might be good to be generic in the bookmark handling so that larder imports can be bulk manipulated a
+ * similar way
+ *
+ * FIXME
+ * might make sense to convert certain steps to actions
  *
  * TODO
  * saving bookmarks/tags should be in transactions
- *
- * FIXME
- * there was a good article about writing efficient jobs and it mentioned not putting a whole model in the constructor
- * need to see if we benefit from this. Specifically the $this->user
- * - https://mateusguimaraes.com/posts/scaling-laravel
- *
- * TODO
- * not sure if it makes sense to have some sort of service build the job. Advantages is that we can consistently do
- * stuff like creating with the same config values each time
  */
 
 /*
@@ -80,17 +71,17 @@ use Throwable;
  * and then find an alternate way to check for duplicates. Also need to be wary
  * of a too many variables error. Need to look for other common import/file handling
  * issues and write tests for them.
- *
- * FIXME
- * need to guard against large notification errors. ex. sending a really long email or logs taking a long time to render.
- * I don't think the errors should exceed the file size, but we don't want to repeatedly send MB worth of errors back
- * and forth if we don't have too. Need ways to consolidate and get more details on specific errors to make the job
- * logs/notifications more useful.
  */
 
 /**
  * TODO
  * job progress monitoring
+ * We do not have a good way to get a specific job ID, nor are we able to explicitly
+ * execute a specific job in the background unless it runs within the current HTTP request. Because of this we might.
+ * As a work around, maybe we could invert the job dependencies and create our own import job table and then use the
+ * info from there to create/execute specific jobs. We would then need another job to scan this table and periodically
+ * create the real jobs from this data. Or maybe we could create a per-user queue and the play button just runs a
+ * artisan queue:work command for that specific queue.
  *
  * TODO
  * add a dry run feature that will run through the bookmark import process, but won't actually persist anything to the database
@@ -113,13 +104,7 @@ use Throwable;
  * troubleshooting
  *
  * FIXME
- * what type of data safety needs to occur? Should bookmark text be sanitized?
- *
- * FIXME
  * log messages leak hashed file names or paths. They need to show the user the name of the file as they uploaded it
- *
- * FIXME
- * might make sense to convert certain steps to actions
  *
  * @see https://laravel.com/docs/5.8/queues#class-structure
  */
@@ -165,7 +150,13 @@ class ProcessBookmarks implements ShouldQueue, ShouldBeUnique
     ): void
     {
         // 0. initialization
+        $jobStart = Carbon::now();
         $logger->info(__('import.job_start'), ['file' => $this->fileName, 'user' => $this->user->name]);
+
+//        $importJob = BookmarkFileImport::create([
+//            'started_at' => $jobStart,
+//            'bookmark_file_id' => $this->fileId
+//            ]);
 
         //  TODO set job status as 'in progress'
 
@@ -182,6 +173,8 @@ class ProcessBookmarks implements ShouldQueue, ShouldBeUnique
         }
 
         // 2. get the bookmark file contents
+        // TODO pull file name from metadata
+        // TODO use gates to protect the file permissions
         $logger->debug(__('import.job.bookmark_file.read', ['folder' => $this->folderName]));
 
         $bookmarkFileContents = Storage::get($this->fileName); // FIXME does this ever throw FileNotFoundException? It did not during a unit test

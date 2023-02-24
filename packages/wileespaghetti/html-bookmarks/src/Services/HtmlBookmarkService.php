@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HtmlBookmarks\Services;
 
 use Exception;
+use HtmlBookmarks\Jobs\ProcessBookmarks;
 use HtmlBookmarks\Models\BookmarkFile;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Http\UploadedFile;
@@ -19,26 +20,9 @@ use Throwable;
  * might be able to extend NetscapeBookmarkParser to be streamable by getting line by line and parsingString then
  * listening to the logger and parsing log messages
  *
- * TODO
- * should there be an option to stage import or import to a specific folder
- *
  * FIXME
  * need to do some testing with tags that contain spaces. Bookmark parser will allow them if a header has a comma,
  * or if one of the tags fields has a comma. Will need to normalize if Larder doesn't allow them.
- *
- * TODO
- * I wonder if there is any advantage to storing the files in the database so we can
- * go back and show processing errors, or highlight found bookmarks in the file to
- * double-check.
- *
- * FIXME
- * handle normal PHP upload issues (ex. file too large, wrong mime type, etc.)
- * - https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload
- * - https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html
- *
- * FIXME
- * might want to strip non-alphanumeric characters from getClientOriginalName(). Not sure if this is a big
- * deal since the only time we use this name is to show it to the user, and maybe as the download file name
  */
 class HtmlBookmarkService
 {
@@ -58,19 +42,13 @@ class HtmlBookmarkService
     /**
      * @param UploadedFile $file
      * @param User $user
-     * @return bool
-     *
-     * TODO
-     * set the file to read-only when saving
+     * @return BookmarkFile|null
      *
      * TODO
      * see if there are ways to get more details about the failures
      *
      * TODO
      * maybe use putFileAs to improve performance?
-     *
-     * FIXME
-     * file extension should be changed to prevent execute attacks
      */
     public function store(UploadedFile $file, User $user): BookmarkFile|null
     {
@@ -88,7 +66,7 @@ class HtmlBookmarkService
             return null;
         }
 
-        $metadata = $this->saveMetadata($file, $sanitizedFileName, $storedPath, $user);
+        $metadata = $this->createMetadata($file, $sanitizedFileName, $storedPath, $user);
         if (!$metadata) {
             $wasDeleted = $this->storage->delete($storedPath);
             if (!$wasDeleted) {
@@ -102,6 +80,8 @@ class HtmlBookmarkService
             return null;
         }
 
+        ProcessBookmarks::dispatch($metadata->path, $user, null); // FIXME handle failure adding to queue
+
         return $metadata;
     }
 
@@ -112,7 +92,7 @@ class HtmlBookmarkService
      * @param $user
      * @return BookmarkFile|null
      */
-    public function saveMetadata($file, $fileName, $path, $user): BookmarkFile|null {
+    public function createMetadata($file, $fileName, $path, $user): BookmarkFile|null {
         $metadata = new BookmarkFile([
             'file_name' => $fileName,
             'file_name_original' => $file->getClientOriginalName(), // FIXME might want to strip non-alphanum
