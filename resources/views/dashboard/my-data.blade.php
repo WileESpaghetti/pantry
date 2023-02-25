@@ -22,6 +22,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('imports.index') }}">
+                    <i class="fas fa-file-import d-block fs-1"></i>
+                    {{ __('Imports') }}
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('user-settings') }}">
                     <i class="fas fa-user-cog d-block fs-1"></i>
                     {{ __('Settings') }}
