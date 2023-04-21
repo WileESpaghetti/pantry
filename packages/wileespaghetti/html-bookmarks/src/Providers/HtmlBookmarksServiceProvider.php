@@ -28,10 +28,7 @@ class HtmlBookmarksServiceProvider extends ServiceProvider
         $this->app->bind('Shaarli\NetscapeBookmarkParser\NetscapeBookmarkParser', function ($app) {
             $bookmarkLogger = $app->make(HtmlBookmarkParserLoggerListener::class);
 
-            $parser = new NetscapeBookmarkParser();
-            $parser->setLogger($bookmarkLogger);
-
-            return $parser;
+            return new NetscapeBookmarkParser([], $bookmarkLogger);
         });
     }
 
