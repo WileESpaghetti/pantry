@@ -8,24 +8,25 @@ use App\Http\Controllers\Controller;
 use HtmlBookmarks\Http\Requests\BookmarkFileImportRequest;
 use HtmlBookmarks\Models\BookmarkFile;
 use HtmlBookmarks\Services\HtmlBookmarkService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Psr\Log\LoggerInterface;
 
 class HtmlBookmarkController extends Controller
 {
-    private LoggerInterface $log;
-
-    public function __construct(LoggerInterface $logger) {
-        $this->log = $logger;
-    }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param BookmarkFileImportRequest $request
      * @param HtmlBookmarkService $htmlBookmarkService
      * @return RedirectResponse
+     *
+     * FIXME
+     * for some reason after submiting a bookmark if you try to submit another one without reloading the page
+     * (ie: while the success messages are still showing) then the queue gives you a failure max retries error when
+     * running. This might be because it is trying to requeue the job and it has the unique trait.
      */
     public function store(BookmarkFileImportRequest $request, HtmlBookmarkService $htmlBookmarkService): RedirectResponse
     {
@@ -45,7 +46,8 @@ class HtmlBookmarkController extends Controller
             ->with('success', __('htmlbookmarks::import.started'));
     }
 
-    public function show(BookmarkFile $file) {
+    public function show(BookmarkFile $file): View|Factory|Application
+    {
         return view('bookmarks.files.show', compact($file));
     }
 }
