@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Pantry\Http\Controllers\BookmarkController;
+use Pantry\Http\Controllers\FolderController;
+use Pantry\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['web', 'auth']], function() {
-    Route::delete('tags', [App\Http\Controllers\TagController::class, 'deleteMany'])->name('tags.destroyMany');
-    Route::resource('tags', App\Http\Controllers\TagController::class);
-    Route::resource('folders', App\Http\Controllers\FolderController::class);
-    Route::resource('bookmarks', App\Http\Controllers\BookmarkController::class);
+    Route::delete('tags', [TagController::class, 'deleteMany'])->name('tags.destroyMany');
+    Route::resource('tags', TagController::class);
+    Route::resource('folders', FolderController::class);
+    Route::resource('bookmarks', BookmarkController::class);
 });
 
