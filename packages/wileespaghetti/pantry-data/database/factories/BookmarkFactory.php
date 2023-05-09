@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Pantry\bookmark;
+use Pantry\Models\bookmark;
 use Pantry\User;
 
 /**
- * @extends Factory<bookmark>
+ * @extends Factory<Bookmark>
  */
 class BookmarkFactory extends Factory
 {

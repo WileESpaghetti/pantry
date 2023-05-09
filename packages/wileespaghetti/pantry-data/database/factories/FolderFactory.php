@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Pantry\Folder;
+use Pantry\Models\Folder;
 
 /**
  * @extends Factory<Folder>
