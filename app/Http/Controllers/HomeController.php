@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use HtmlBookmarks\Services\UploadService;
 use Illuminate\Support\Facades\Auth;
-use Pantry\Bookmark;
+use Pantry\Models\Bookmark;
+use function HtmlBookmarks\Services\humanBytes;
 
 class HomeController extends Controller
 {
+
+    private UploadService $uploadService;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UploadService $uploadService)
     {
         $this->middleware('auth');
+        $this->uploadService = $uploadService;
     }
 
     /**
@@ -32,6 +37,6 @@ class HomeController extends Controller
 
         $notifications->markAsRead();
 
-        return view('home', ['notifications' => $notifications, 'bookmarks' => $bookmarks]);
+        return view('home', ['notifications' => $notifications, 'bookmarks' => $bookmarks, 'uploadLimit' => humanBytes($this->uploadService->getUploadLimit())]);
     }
 }

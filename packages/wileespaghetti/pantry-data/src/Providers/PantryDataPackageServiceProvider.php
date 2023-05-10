@@ -8,8 +8,6 @@ class PantryDataPackageServiceProvider extends ServiceProvider {
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/config.php', 'pantry');
-
-//        $this->app->bind('App\User', 'Pantry\User');
     }
 
     public function boot()
