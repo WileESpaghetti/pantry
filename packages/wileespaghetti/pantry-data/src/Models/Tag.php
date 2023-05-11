@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pantry;
+namespace Pantry\Models;
 
 use Database\Factories\TagFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,7 +21,7 @@ class Tag extends Model
      */
     public function bookmarks(): BelongsToMany
     {
-        return $this->belongsToMany('Pantry\Bookmark');
+        return $this->belongsToMany(Bookmark::class);
     }
 
     protected static function newFactory(): TagFactory

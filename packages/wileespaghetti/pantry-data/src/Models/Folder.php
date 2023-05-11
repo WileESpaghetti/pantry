@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Pantry;
+namespace Pantry\Models;
 
 use Database\Factories\FolderFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,7 +24,7 @@ class Folder extends Model
      */
     public function bookmarks(): HasMany
     {
-        return $this->hasMany('Pantry\Bookmark');
+        return $this->hasMany(Bookmark::class);
     }
 
     protected static function newFactory(): FolderFactory

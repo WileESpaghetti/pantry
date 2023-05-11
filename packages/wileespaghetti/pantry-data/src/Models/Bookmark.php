@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Pantry;
+namespace Pantry\Models;
 
 use Database\Factories\BookmarkFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
