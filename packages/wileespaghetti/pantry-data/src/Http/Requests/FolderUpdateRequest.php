@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace Pantry\Http\Requests;
 
 class FolderUpdateRequest extends FolderStoreRequest
 {

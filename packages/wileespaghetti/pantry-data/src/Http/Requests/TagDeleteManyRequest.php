@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace Pantry\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 class TagDeleteManyRequest extends FormRequest
 {
