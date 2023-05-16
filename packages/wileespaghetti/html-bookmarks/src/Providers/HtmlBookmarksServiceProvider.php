@@ -12,14 +12,22 @@ class HtmlBookmarksServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
     public function register(): void
     {
         parent::register();
 
         $this->configureParserBindings();
+    }
+
+    /**
+     * Bootstrap services.
+     */
+    public function boot(): void
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/web.php');
+        $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'htmlbookmarks');
     }
 
     public function configureParserBindings(): void
@@ -30,18 +38,5 @@ class HtmlBookmarksServiceProvider extends ServiceProvider
 
             return new NetscapeBookmarkParser([], $bookmarkLogger);
         });
-    }
-
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot(): void
-    {
-        // TODO test routes exist as part of testing controllers
-//        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-        $this->loadTranslationsFrom(__DIR__.'/../lang', 'htmlbookmarks');
     }
 }
