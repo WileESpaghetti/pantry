@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HtmlBookmarks\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use HtmlBookmarks\Http\Requests\BookmarkFileImportRequest;
 use HtmlBookmarks\Models\BookmarkFile;
 use HtmlBookmarks\Services\HtmlBookmarkService;
@@ -24,7 +23,7 @@ class HtmlBookmarkController extends Controller
      * @return RedirectResponse
      *
      * FIXME
-     * for some reason after submiting a bookmark if you try to submit another one without reloading the page
+     * for some reason after submitting a bookmark if you try to submit another one without reloading the page
      * (ie: while the success messages are still showing) then the queue gives you a failure max retries error when
      * running. This might be because it is trying to requeue the job and it has the unique trait.
      */
