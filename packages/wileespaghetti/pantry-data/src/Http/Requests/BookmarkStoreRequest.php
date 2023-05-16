@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Pantry\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * TODO
@@ -13,22 +12,12 @@ use JetBrains\PhpStorm\ArrayShape;
 class BookmarkStoreRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * run a file through some basic checks to try and reduce the number of errors in parsing
      * returns whether the file passed validation.
      */
-    #[ArrayShape(['url' => 'string', 'name' => 'string', 'description' => 'string', 'tags' => 'string', 'tags.*' => 'string'])] public function rules(): array
+    public function rules(): array
     {
         return [
             'url' => 'required|string|max:255',
