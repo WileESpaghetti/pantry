@@ -21,8 +21,6 @@ class BookmarkFileImportRequest extends FormRequest
      *
      * TODO
      * check user can_upload and can_write (demo users)
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -34,8 +32,6 @@ class BookmarkFileImportRequest extends FormRequest
      *
      * run a file through some basic checks to try and reduce the number of errors in parsing
      * returns whether the file passed validation.
-     *
-     * @return array
      *
      * TODO
      * add parameter for which folder to import into when the import gets queued
@@ -51,10 +47,7 @@ class BookmarkFileImportRequest extends FormRequest
         return $this->hasFile(self::PARAM_UPLOADED_FILE) && $this->getFile() != null;
     }
 
-    /**
-     * @return UploadedFile|null
-     */
-    public function getFile(): UploadedFile|null
+    public function getFile(): ?UploadedFile
     {
         $uploadedFile = $this->file(self::PARAM_UPLOADED_FILE);
         if (is_array($uploadedFile)) {
