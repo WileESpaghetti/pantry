@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * TODO
- * update validation message for tags
+ * update validation message for tags and tags.*
  */
 class BookmarkStoreRequest extends FormRequest
 {
@@ -38,7 +38,7 @@ class BookmarkStoreRequest extends FormRequest
             return;
         }
 
-        $tags = preg_split('/,* +/', $formTags, -1, PREG_SPLIT_NO_EMPTY);
+        $tags = preg_split('/,* */', $formTags, -1, PREG_SPLIT_NO_EMPTY);
         if ($tags === false) {
             return;
         }
