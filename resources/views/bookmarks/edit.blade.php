@@ -68,9 +68,9 @@ add tags
 
                     <div class="row mb-3">
                         <label for="description" class="form-label">{{__('Description')}}</label>
-                        <input type="text" class="form-control" id="tags" name="tags" placeholder="Choose tags" value="{{$bookmark->tags->implode('name', ', ')}}">
+                        <input type="text" class="form-control @error('tags.*') is-invalid @enderror" id="tags" name="tags" placeholder="Choose tags" value="{{$bookmark->tags->implode('tags', ', ')}}">
 {{--                        <input type="text" class="form-control @error('description') is-invalid @enderror" id="description" name="description" value="{{ old('description', $bookmark->description) }}" >--}}
-                        @error('tags')
+                        @error('tags.*')
                         <p class="invalid-feedback">
                             {{$message}}
                         </p>
