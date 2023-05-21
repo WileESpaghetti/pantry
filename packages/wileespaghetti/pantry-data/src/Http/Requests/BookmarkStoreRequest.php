@@ -24,7 +24,7 @@ class BookmarkStoreRequest extends FormRequest
             'name' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:255',
             'tags' => 'nullable|array',
-            'tags.*' => 'numeric|string|max:255'
+            'tags.*' => 'string|max:255'
         ];
     }
 
@@ -38,7 +38,7 @@ class BookmarkStoreRequest extends FormRequest
             return;
         }
 
-        $tags = preg_split('/,* */', $formTags, -1, PREG_SPLIT_NO_EMPTY);
+        $tags = preg_split('/,+ */', $formTags, -1, PREG_SPLIT_NO_EMPTY);
         if ($tags === false) {
             return;
         }
