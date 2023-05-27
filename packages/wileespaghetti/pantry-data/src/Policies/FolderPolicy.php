@@ -5,7 +5,7 @@ namespace Pantry\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
-use Pantry\Folder;
+use Pantry\Models\Folder;
 use Pantry\User;
 
 class FolderPolicy

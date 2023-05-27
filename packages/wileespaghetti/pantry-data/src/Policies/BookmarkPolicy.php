@@ -5,7 +5,7 @@ namespace Pantry\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
-use Pantry\Bookmark;
+use Pantry\Models\Bookmark;
 use Pantry\User;
 
 class BookmarkPolicy
@@ -14,14 +14,11 @@ class BookmarkPolicy
 
     /**
      * Determine whether the user can view any models.
-     *
-     * @param User $user
-     * @return Response|bool
      */
-//    public function viewAny(User $user)
-//    {
-//         TODO user must be logged in
-//    }
+    public function viewAny(User $user): bool
+    {
+        return true;
+    }
 
     /**
      * Determine whether the user can view the model.

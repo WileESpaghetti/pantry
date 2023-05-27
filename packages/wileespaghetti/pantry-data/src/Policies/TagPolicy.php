@@ -5,7 +5,7 @@ namespace Pantry\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
-use Pantry\Tag;
+use Pantry\Models\Tag;
 use Pantry\User;
 
 class TagPolicy
