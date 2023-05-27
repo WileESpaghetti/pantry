@@ -15,7 +15,7 @@ class Bookmark extends Model
 {
     use HasFactory, HasUser;
 
-    protected $fillable = ['name', 'image', 'url', 'description', 'public', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'image', 'url', 'description', 'public', 'created_at', 'updated_at', 'user_id'];
 
     public function tags(): BelongsToMany
     {

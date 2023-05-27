@@ -17,7 +17,7 @@ class Folder extends Model
     /**
      * `color` and `links` can be filled only because they are needed for the Larder API
      */
-    protected $fillable = ['name', 'color', 'links'];
+    protected $fillable = ['name', 'color', 'links', 'user_id'];
 
     /**
      * Get the bookmarks for the folder.

@@ -14,7 +14,7 @@ class Tag extends Model
 {
     use HasFactory, HasUser;
 
-    protected $fillable = ['name', 'color'];
+    protected $fillable = ['name', 'color', 'user_id'];
 
     /**
      * Get the bookmarks for the tag.
