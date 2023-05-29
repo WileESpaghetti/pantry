@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Pantry\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use JetBrains\PhpStorm\ArrayShape;
 
 class TagDeleteManyRequest extends FormRequest
 {
@@ -18,10 +17,8 @@ class TagDeleteManyRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
      */
-    #[ArrayShape(['tags' => ['int']])] public function rules(): array
+    public function rules(): array
     {
         return [
             'tags' => 'required|array',
