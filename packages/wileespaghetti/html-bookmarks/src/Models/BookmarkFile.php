@@ -4,10 +4,14 @@ namespace HtmlBookmarks\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Pantry\Traits\HasUser;
 
 /**
  * Metadata for imported HTML bookmark files
+ *
+ * TODO store MIME type field
+ * TODO maybe add disk field
  */
 class BookmarkFile extends Model
 {
@@ -16,9 +20,10 @@ class BookmarkFile extends Model
     protected $fillable = [
         'file_name',
         'file_name_original',
-        'sha256sum',
         'file_size_bytes',
         'path',
+        'sha256sum',
+        'user_id'
     ];
 
     protected $hidden = [
@@ -26,4 +31,8 @@ class BookmarkFile extends Model
         'path',
         'file_name',
     ];
+
+    public function bookmarkFileImport(): HasMany {
+        return $this->hasMany(BookmarkFileImport::class);
+    }
 }
