@@ -8,12 +8,14 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Translation\PotentiallyTranslatedString;
 
 /**
- * Validates that a file contains only word letters, numbers, and word separators that are not repeated
+ * Validates that a file contains only word characters, numbers, and word separators that are not repeated
+ *
+ * TODO should support strings and not just serverInfoed file names
  */
 class SimpleFileName implements InvokableRule
 {
-    private string $allowedFileNameFormat = '/^\w+([ \-_.]*\w+)*\w+$/';
-    private string $fileNameFormatError = 'The :attribute file name contains unsupported characters. File names should contain only letters, numbers, spaces, hyphens, and underscores.';
+    private string $allowedFileNameFormat = '/^\w+([ \-_.]?\w+)*$/';
+    private string $fileNameFormatError = 'htmlbookmarks::rules.simple_file_name.failure';
 
     /**
      * Run the validation rule.
@@ -26,12 +28,12 @@ class SimpleFileName implements InvokableRule
     public function __invoke($attribute, $value, $fail): void
     {
         if (!($value instanceof UploadedFile) || !$value->isValid()) {
-            $fail($this->fileNameFormatError);
+            $fail($this->fileNameFormatError)->translate(['attribute' => $attribute]);
         }
 
         $matches = preg_match($this->allowedFileNameFormat, $value->getClientOriginalName());
         if (empty($matches)) {
-            $fail($this->fileNameFormatError);
+            $fail($this->fileNameFormatError)->translate(['attribute' => $attribute]);
         }
     }
 }
