@@ -29,6 +29,10 @@ use Psr\Log\LogLevel;
  *
  * TODO
  * tie found tags/bookmarks to a specific line number(s)
+ *
+ * TODO
+ * for performance probably want this to be a buffered log and only write entries at the end since this wound up being
+ * a bulk of the time when profiling
  */
 class HtmlBookmarkParserLoggerListener implements LoggerInterface, LoggerAwareInterface
 {
