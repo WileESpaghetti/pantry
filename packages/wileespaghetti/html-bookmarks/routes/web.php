@@ -1,7 +1,6 @@
 <?php
 
-use HtmlBookmarks\Http\Controllers\BookmarkFileImportController;
-use HtmlBookmarks\Http\Controllers\HtmlBookmarkController;
+use HtmlBookmarks\Http\Controllers\BookmarkFileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['web', 'auth']], function() {
-    Route::resource('imports', BookmarkFileImportController::class);
-    Route::post('/import', [HtmlBookmarkController::class, 'store'])->name('bookmarks.import');
-    Route::get('/files/{file}', [HtmlBookmarkController::class, 'show'])->name('bookmarks.files.show');
+    Route::resource('imports', BookmarkFileController::class);
+    Route::post('/import', [BookmarkFileController::class, 'store'])->name('bookmarks.import');
+    Route::get('/files/{file}', [BookmarkFileController::class, 'show'])->name('bookmarks.files.show');
 });
