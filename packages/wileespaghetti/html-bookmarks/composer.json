@@ -11,12 +11,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "shaarli/netscape-bookmark-parser": "^3.2"
+        "shaarli/netscape-bookmark-parser": "^4.0"
     },
     "autoload": {
         "psr-4": {
             "HtmlBookmarks\\": "src"
-        }
+        },
+        "files": ["src/Services/Formatter.php"]
     },
     "autoload-dev": {
         "psr-4": {

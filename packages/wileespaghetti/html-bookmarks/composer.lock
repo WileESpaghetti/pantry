@@ -4,62 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7db75648627e64a3d5d51345ee880da",
+    "content-hash": "a6ed6d581745c9444de57ee8e0bfa01d",
     "packages": [
-        {
-            "name": "katzgrau/klogger",
-            "version": "1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/katzgrau/KLogger.git",
-                "reference": "a4ed373fa8a214aa4ae7aa4f221fe2c6ce862ef1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/katzgrau/KLogger/zipball/a4ed373fa8a214aa4ae7aa4f221fe2c6ce862ef1",
-                "reference": "a4ed373fa8a214aa4ae7aa4f221fe2c6ce862ef1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3",
-                "psr/log": "^1.0.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.0.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Katzgrau\\KLogger\\": "src/"
-                },
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kenny Katzgrau",
-                    "email": "katzgrau@gmail.com"
-                },
-                {
-                    "name": "Dan Horrigan",
-                    "email": "dan@dhorrigan.com"
-                }
-            ],
-            "description": "A Simple Logging Class",
-            "keywords": [
-                "logging"
-            ],
-            "support": {
-                "issues": "https://github.com/katzgrau/KLogger/issues",
-                "source": "https://github.com/katzgrau/KLogger/tree/master"
-            },
-            "time": "2016-11-07T19:29:14+00:00"
-        },
         {
             "name": "psr/log",
             "version": "1.1.4",
@@ -112,21 +58,21 @@
         },
         {
             "name": "shaarli/netscape-bookmark-parser",
-            "version": "v3.2.0",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shaarli/netscape-bookmark-parser.git",
-                "reference": "5b2eb8d478f5e6938359e116880763e6b1892e62"
+                "reference": "aa024e5731959966660d98fcefe27deada40d88e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shaarli/netscape-bookmark-parser/zipball/5b2eb8d478f5e6938359e116880763e6b1892e62",
-                "reference": "5b2eb8d478f5e6938359e116880763e6b1892e62",
+                "url": "https://api.github.com/repos/shaarli/netscape-bookmark-parser/zipball/aa024e5731959966660d98fcefe27deada40d88e",
+                "reference": "aa024e5731959966660d98fcefe27deada40d88e",
                 "shasum": ""
             },
             "require": {
-                "katzgrau/klogger": "~1.0",
-                "php": ">=7.1"
+                "php": ">=7.1",
+                "psr/log": "^1.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0",
@@ -134,9 +80,9 @@
             },
             "type": "library",
             "autoload": {
-                "files": [
-                    "NetscapeBookmarkParser.php"
-                ]
+                "psr-4": {
+                    "Shaarli\\NetscapeBookmarkParser\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -154,21 +100,29 @@
                     "email": "virtualtam@flibidi.net",
                     "homepage": "https://github.com/virtualtam",
                     "role": "Developer"
+                },
+                {
+                    "name": "Matthias Morin",
+                    "email": "mat@tangoman.io",
+                    "homepage": "https://github.com/TangoMan75",
+                    "role": "Developer"
                 }
             ],
             "description": "Generic Netscape bookmark parser",
             "homepage": "https://github.com/shaarli/netscape-bookmark-parser",
             "keywords": [
                 "bookmark",
+                "decoder",
+                "encoder",
                 "link",
                 "netscape",
                 "parse"
             ],
             "support": {
                 "issues": "https://github.com/shaarli/netscape-bookmark-parser/issues",
-                "source": "https://github.com/shaarli/netscape-bookmark-parser/tree/v3.2.0"
+                "source": "https://github.com/shaarli/netscape-bookmark-parser/tree/v4.0.0"
             },
-            "time": "2021-01-31T09:39:07+00:00"
+            "time": "2022-08-13T09:57:26+00:00"
         }
     ],
     "packages-dev": [],
