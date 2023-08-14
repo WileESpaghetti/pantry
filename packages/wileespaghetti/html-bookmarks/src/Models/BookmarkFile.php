@@ -10,8 +10,8 @@ use Pantry\Traits\HasUser;
 /**
  * Metadata for imported HTML bookmark files
  *
- * TODO store MIME type field
  * TODO maybe add disk field
+ * TODO maybe add original created/modified dates
  */
 class BookmarkFile extends Model
 {
